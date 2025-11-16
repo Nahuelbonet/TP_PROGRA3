@@ -1,0 +1,118 @@
+body {
+  background: linear-gradient(135deg, #240046, #3c096c, #5a189a);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Contenedor */
+.confirmacion-container {
+  width: 90%;
+  max-width: 850px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  box-shadow: 0 0 35px rgba(255, 0, 255, 0.25);
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.95);
+  animation: fadeIn 0.8s forwards;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Icono éxito */
+.icono-exito {
+  font-size: 70px;
+  color: #00ffae;
+  margin-bottom: 15px;
+  text-shadow: 0 0 20px #00ffae;
+}
+
+/* Título */
+.empresa {
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #e2c1ff;
+  text-shadow: 0 0 15px #d27cff;
+}
+
+/* Subtítulo */
+.subtitulo {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: #e7d8ff;
+}
+
+/* Tabla */
+.detalles-compra table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 25px;
+}
+
+.detalles-compra th,
+.detalles-compra td {
+  padding: 12px;
+}
+
+.detalles-compra th {
+  color: #ffb7ff;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.detalles-compra td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Totales */
+.total {
+  margin-top: 25px;
+  text-align: left;
+  font-size: 1.1rem;
+}
+
+.total strong {
+  color: #d27cff;
+}
+
+/* Botones */
+.botones-final {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.volver,
+.descargar-pdf {
+  padding: 15px 22px;
+  background: linear-gradient(135deg, #9d4edd, #ff00d4);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 220px;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+.volver:hover,
+.descargar-pdf:hover {
+  transform: scale(1.09);
+  box-shadow: 0 0 25px #ff00d4;
+}

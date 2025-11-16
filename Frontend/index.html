@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electronics Store</title>
+    <link rel="icon" type="image/png" href="./assets/img/icono_pc.ico" />
+    <link rel="stylesheet" href="./assets/css/index.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">Electronics Store</div>
+      <div class="alumnos">
+        <h4>Diego Adrian</h4>
+        <h4>Nahuel Bonet</h4>
+      </div>
+      <button id="logout-button">Logout</button>
+      <!-- botón hamburguesa -->
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+        ☰
+      </button>
+
+      <!-- nav que contiene los elementos del header (desktop y móvil) -->
+      <nav class="nav" aria-label="Menú principal">
+        <div class="dropdown">
+          <button class="boton-dropdown">Catálogo</button>
+          <div class="contenido-desplegable">
+            <a href="#" data-categoria="Todos">Todos</a>
+            <a href="#" data-categoria="Celulares">Celulares</a>
+            <a href="#" data-categoria="Consolas">Consolas</a>
+          </div>
+        </div>
+
+        <input type="text" placeholder="Buscar..." />
+
+        <button id="boton_carrito" class="boton_carrito">
+          <span id="contador_carrito">Carrito - Productos: 0</span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <h2 id="titulo-productos">Nuestros Productos</h2>
+
+      <div class="botones-ordenar">
+        <button id="ordenar-nombre">Ordenar por nombre</button>
+        <button id="ordenar-precio">Ordenar por precio</button>
+      </div>
+
+      <div class="lista_productos"></div>
+    </main>
+
+    <section class="seccion_carrito" id="panel-carrito">
+      <div id="cerrar-carrito" class="cerrar-carrito"></div>
+
+      <h2>Carrito</h2>
+
+      <div class="carrito-items"></div>
+
+      <div class="carrito-total">Total: $0</div>
+
+      <button id="finalizar_compra" class="finalizar_compra">
+        <a href="./compra_confirmada.html">Confirmar Compra</a>
+      </button>
+      <button id="vaciar" class="vaciar">Vaciar Carrito</button>
+    </section>
+
+    <footer>© 2025 Electronics Store. Todos los derechos reservados.</footer>
+
+    <script src="./js/main.js"></script>
+  </body>
+</html>
