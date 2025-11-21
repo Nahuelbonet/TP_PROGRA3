@@ -1,0 +1,123 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top left, #1a0033, #0a001a 80%);
+  color: #fff;
+  overflow: hidden;
+}
+
+.container {
+  background: rgba(25, 20, 40, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.2rem;
+  padding: 4rem 5rem;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(180, 0, 255, 0.3);
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  color: #e0b3ff;
+  text-shadow: 0 0 10px rgba(190, 0, 255, 0.5);
+  letter-spacing: 1px;
+}
+
+.input-group {
+  margin-bottom: 1.8rem;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+  color: #d3c4ff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.form_input {
+  width: 100%;
+  font-size: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 0.6rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.form_input:focus {
+  border-color: #b300ff;
+  box-shadow: 0 0 12px rgba(179, 0, 255, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+button {
+  width: 100%;
+  background: linear-gradient(90deg, #b300ff, #ff0099);
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(179, 0, 255, 0.4);
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(255, 0, 153, 0.6);
+}
+
+#welcome-message {
+  color: #87fba3;
+  font-size: 1.4rem;
+  margin-top: 2rem;
+  text-shadow: 0 0 8px rgba(0, 255, 128, 0.5);
+}
+
+.hidden {
+  display: none;
+}
+
+::placeholder {
+  color: #ccc;
+  opacity: 0.7;
+}
+
+#campo-admin {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  margin-top: 1rem;
+}
