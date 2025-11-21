@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Eliminar Producto</title>
+  <link rel="stylesheet" href="/admin_dark.css">
+
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .danger { background:#c62828; color:white; padding:12px; border-radius:5px; margin-top:20px; }
+    button { padding:10px; background:#b71c1c; color:white; border:none; border-radius:5px; cursor:pointer; width:200px; margin-top:10px; }
+  </style>
+</head>
+
+<body>
+
+<button id="dark-toggle" class="dark-btn">🌙</button>
+
+<h1>Eliminar Producto</h1>
+
+<p>¿Estás seguro que querés eliminar este producto?</p>
+
+<div class="danger">
+  <strong><%= producto.nombre %></strong><br>
+  Precio: $<%= producto.precio %><br>
+  Categoría: <%= producto.categoria %>
+</div>
+
+<form method="POST" action="/admin/productos/eliminar/<%= producto.id %>">
+  <button type="submit">Eliminar definitivamente</button>
+</form>
+
+<a href="/admin/productos">Cancelar</a>
+
+<script src="/admin_darkmode.js"></script>
+</body>
+</html>

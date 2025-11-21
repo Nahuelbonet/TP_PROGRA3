@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Admin - Productos</title>
+    
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        .topbar {
+            margin-bottom: 20px;
+        }
+
+        a.btn {
+            padding: 6px 10px;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        /* === BUSCADOR === */
+        .buscador-container {
+            margin: 15px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .buscador-container input {
+            padding: 8px 12px;
+            font-size: 15px;
+            width: 280px;
+        }
+
+        .clear-btn {
+            background: #888;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .acciones a {
+            padding: 6px 10px;
+            background: #333;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <a class="btn" href="/admin/dashboard">Volver al dashboard</a>
+        <a class="btn" href="/">Portal Cliente</a>
+    </div>
+
+    <h1>Productos</h1>
+
+    <a class="btn" href="/admin/productos/nuevo">Crear Producto</a>
+
+    <!-- === BUSCADOR === -->
+    <div class="buscador-container">
+        <input 
+            type="text" 
+            id="buscador"
+            placeholder="Buscar producto por nombre..."
+        >
+        <button class="btn clear-btn" id="limpiar">Limpiar</button>
+    </div>
+
+    <table id="tabla-productos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Img</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="cuerpo-tabla">
+
+            <% productos.forEach(p => { %>
+            <tr>
+                <td><%= p.id %></td>
+                <td class="nombre-prod"><%= p.nombre %></td>
+                <td>$<%= p.precio %></td>
+                <td><%= p.categoria %></td>
+                <td><img src="<%= p.img %>" width="60"></td>
+                <td class="acciones">
+                    <a href="/admin/productos/editar/<%= p.id %>">Editar</a>
+                    <a href="/admin/productos/eliminar/<%= p.id %>" style="background:#a30000;">Eliminar</a>
+                </td>
+            </tr>
+            <% }) %>
+
+        </tbody>
+    </table>
+
+    <script>
+        // === BUSCADOR ===
+        const input = document.getElementById("buscador");
+        const btnLimpiar = document.getElementById("limpiar");
+        const filas = document.querySelectorAll("#cuerpo-tabla tr");
+
+        input.addEventListener("input", () => filtrarTabla());
+        btnLimpiar.addEventListener("click", () => {
+            input.value = "";
+            filtrarTabla();
+        });
+
+        function filtrarTabla() {
+            const texto = input.value.toLowerCase();
+
+            filas.forEach(fila => {
+                const nombre = fila.querySelector(".nombre-prod").innerText.toLowerCase();
+
+                if (nombre.includes(texto)) {
+                    fila.style.display = "";
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

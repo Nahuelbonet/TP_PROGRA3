@@ -1,0 +1,65 @@
+/* ===============================
+   MODO OSCURO GLOBAL (solo si body.dark-mode)
+   =============================== */
+
+body.dark-mode {
+    background: #121212 !important;
+    color: #fff !important;
+}
+
+/* Tarjetas de productos */
+body.dark-mode .card {
+    background: #1e1e1e !important;
+    color: white !important;
+    border: 1px solid #333;
+}
+
+/* Navbar */
+body.dark-mode nav {
+    background: #1a1a1a !important;
+}
+
+/* Dropdown catálogo */
+body.dark-mode .dropdown .contenido-desplegable {
+    background: #222 !important;
+}
+
+/* Inputs + botones */
+body.dark-mode input,
+body.dark-mode button {
+    background: #2a2a2a !important;
+    color: white !important;
+}
+
+/* Carrito */
+body.dark-mode .boton_carrito {
+    background: #2a2a2a !important;
+}
+
+body.dark-mode #panel-carrito {
+    background: #1c1c1c !important;
+}
+
+/* ===============================
+   COMPRA CONFIRMADA — Soporte de modo oscuro
+   =============================== */
+
+body.dark-mode .confirmacion-container {
+    background: #1a1a1a !important;
+    color: white !important;
+    box-shadow: 0px 0px 25px rgba(255, 0, 255, 0.3) !important;
+}
+
+body.dark-mode table th,
+body.dark-mode table td {
+    color: white !important;
+}
+
+body.dark-mode .total strong {
+    color: #ff66ff !important;
+}
+
+body.dark-mode .botones-final button {
+    background: #2a2a2a !important;
+    color: #fff !important;
+}

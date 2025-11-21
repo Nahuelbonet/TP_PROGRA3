@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra Confirmada | Electronics Store</title>
+
+    <link rel="icon" type="image/png" href="./assets/img/icono_pc.ico" />
+
+    <!-- SOLO estilos que necesita esta página -->
+    <link rel="stylesheet" href="./assets/css/compra_confirmada.css">
+    <link rel="stylesheet" href="./assets/css/darkmode.css">
+
+    <style>
+        /* ACOMODA EL BOTÓN DE MODO OSCURO SOLO PARA ESTA PÁGINA */
+        .dark-btn-confirmada {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body class="confirmada">
+
+    <!-- Botón de modo oscuro SOLO para esta pantalla -->
+    <button id="dark-toggle" class="dark-btn-confirmada">🌙</button>
+
+    <div class="confirmacion-container animar">
+
+        <div class="icono-exito">✔</div>
+
+        <h1 class="empresa">¡Gracias por tu compra!</h1>
+
+        <div class="mensaje">
+            <p class="subtitulo">
+                Tu pedido fue procesado con éxito, <span id="nombre-usuario"></span>.
+            </p>
+            <p>Estos son los detalles de tu compra:</p>
+        </div>
+
+        <div class="detalles-compra">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-productos"></tbody>
+            </table>
+
+            <div class="total">
+                <p><strong>Total:</strong> <span id="total-final"></span></p>
+                <p><strong>Fecha:</strong> <span id="fecha-hoy"></span></p>
+                <p><strong>N° de Orden:</strong> <span id="nro-orden"></span></p>
+            </div>
+        </div>
+
+        <div class="botones-final">
+            <button id="volver" class="volver">Volver al inicio</button>
+            <button id="descargar-pdf" class="descargar-pdf">Descargar Ticket</button>
+        </div>
+
+    </div>
+
+    <script src="./js/compra_confirmada.js"></script>
+
+    <script>
+        // ================================
+        // MODO OSCURO SOLO PARA ESTA PÁGINA
+        // ================================
+
+        const toggle = document.getElementById("dark-toggle");
+
+        // Aplicar modo oscuro guardado
+        if (localStorage.getItem("darkMode") === "true") {
+            document.body.classList.add("dark-mode");
+        }
+
+        // Activar cambio
+        toggle.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+
+            localStorage.setItem(
+                "darkMode",
+                document.body.classList.contains("dark-mode")
+            );
+        });
+    </script>
+</body>
+</html>
