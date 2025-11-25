@@ -6,12 +6,35 @@
     <title>Electronics Store</title>
     <link rel="icon" type="image/png" href="./assets/img/icono_pc.ico" />
     <link rel="stylesheet" href="./assets/css/index.css" />
-    <link rel="stylesheet" href="./assets/css/darkmode.css">
+    <link rel="stylesheet" href="./assets/css/darkmode.css" />
+
+    <!-- Estilo para el botón Admin -->
+    <style>
+      .btn-admin {
+        margin-right: 12px;
+        background: #2563eb;
+        color: #fff;
+        padding: 8px 14px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+    </style>
   </head>
 
   <body>
     <header>
       <div class="logo">Electronics Store</div>
+
+      <!-- Botón Panel Admin (solo aparece si isAdmin === true) -->
+      <button id="btn-admin" class="btn-admin hidden">Panel Admin</button>
+
+      <!-- Logout -->
       <button id="logout-button">Logout</button>
 
       <!-- botón hamburguesa -->
@@ -22,7 +45,7 @@
       <!-- nav que contiene los elementos del header -->
       <nav class="nav" aria-label="Menú principal">
 
-        <!-- === DROPDOWN CATÁLOGO (solo catálogo!) === -->
+        <!-- === DROPDOWN CATÁLOGO === -->
         <div class="dropdown">
           <button class="boton-dropdown">Catálogo</button>
           <div class="contenido-desplegable">
@@ -32,14 +55,17 @@
           </div>
         </div>
 
-        <!-- === BOTÓN MODO OSCURO (FUERA del dropdown) === -->
+        <!-- === BOTÓN MODO OSCURO === -->
         <button id="dark-toggle" class="dark-btn">🌙</button>
 
+        <!-- Buscador -->
         <input type="text" placeholder="Buscar..." />
 
+        <!-- Carrito -->
         <button id="boton_carrito" class="boton_carrito">
           <span id="contador_carrito">Carrito - Productos: 0</span>
         </button>
+
       </nav>
     </header>
 
@@ -64,13 +90,30 @@
       <div class="carrito-total">Total: $0</div>
 
       <button id="finalizar_compra" class="finalizar_compra">
-        <a href="./compra_confirmada.html">Confirmar Compra</a>
+        Confirmar Compra
       </button>
+
       <button id="vaciar" class="vaciar">Vaciar Carrito</button>
     </section>
 
     <footer>© 2025 Electronics Store. Todos los derechos reservados.</footer>
 
     <script src="./js/main.js"></script>
+
+    <!-- Script para mostrar el botón Admin si corresponde -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const btnAdmin = document.getElementById("btn-admin");
+        const isAdmin = localStorage.getItem("isAdmin");
+
+        if (isAdmin === "true") {
+          btnAdmin.classList.remove("hidden");
+          btnAdmin.addEventListener("click", () => {
+            window.location.href = "http://localhost:3000/admin/dashboard";
+          });
+        }
+      });
+    </script>
+
   </body>
 </html>
