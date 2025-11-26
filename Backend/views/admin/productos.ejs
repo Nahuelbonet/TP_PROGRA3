@@ -9,6 +9,7 @@
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
     rel="stylesheet"
   >
+
   <style>
     :root {
       --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
@@ -35,6 +36,22 @@
       display: flex;
     }
 
+    /* =======================
+       ESTILO MINI IMÁGENES
+       ======================= */
+    .admin-mini-img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(179, 136, 255, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* =======================
+       SIDEBAR
+       ======================= */
     .sidebar {
       width: 260px;
       background: rgba(10, 10, 25, 0.98);
@@ -115,11 +132,6 @@
       transition: all 0.25s ease;
     }
 
-    .btn-logout:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(255, 0, 77, 0.9);
-    }
-
     .btn-store {
       display: block;
       padding: 0.6rem 0.9rem;
@@ -134,11 +146,9 @@
       transition: all 0.25s ease;
     }
 
-    .btn-store:hover {
-      background: rgba(179, 136, 255, 0.25);
-      transform: translateY(-1px);
-    }
-
+    /* =======================
+       MAIN / TABLA
+       ======================= */
     .main {
       flex: 1;
       padding: 2rem 3rem;
@@ -156,73 +166,12 @@
       text-shadow: 0 0 12px var(--accent);
     }
 
-    .btn-primary,
-    .btn-secondary,
-    .btn-danger {
-      padding: 0.55rem 1.1rem;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.25s ease;
-    }
-
     .btn-primary {
       background: linear-gradient(135deg, var(--accent-strong), var(--accent-strong-2));
-      color: #fff;
-      box-shadow: 0 0 15px rgba(179, 136, 255, 0.7);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 20px rgba(179, 136, 255, 0.9);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid rgba(179, 136, 255, 0.6);
-      color: #fff;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(179, 136, 255, 0.2);
-      transform: translateY(-1px);
-    }
-
-    .btn-danger {
-      background: linear-gradient(90deg, var(--danger), var(--danger-2));
-      color: #fff;
-      box-shadow: 0 0 15px rgba(255, 0, 77, 0.5);
-    }
-
-    .btn-danger:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(255, 0, 77, 0.9);
-    }
-
-    .toolbar {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    #buscador {
-      padding: 0.55rem 0.9rem;
+      padding: 0.55rem 1.1rem;
       border-radius: 999px;
-      border: none;
-      outline: none;
-      background: rgba(255, 255, 255, 0.1);
+      text-decoration: none;
       color: #fff;
-      min-width: 220px;
-      box-shadow: 0 0 8px rgba(179, 136, 255, 0.4);
-    }
-
-    #buscador::placeholder {
-      color: rgba(255, 255, 255, 0.7);
     }
 
     .table-wrapper {
@@ -230,9 +179,8 @@
       background: rgba(0, 0, 0, 0.25);
       border-radius: 15px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-      overflow: hidden;
       overflow-x: auto;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
     }
 
     table {
@@ -241,70 +189,34 @@
       min-width: 720px;
     }
 
-    thead {
-      background: rgba(0, 0, 0, 0.4);
-    }
-
     th, td {
       padding: 0.8rem 0.9rem;
-      text-align: left;
-      font-size: 0.9rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    th {
-      color: #e5e0ff;
-      font-weight: 500;
-    }
-
-    tbody tr:hover {
-      background: rgba(179, 136, 255, 0.08);
-    }
-
-    td img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(179, 136, 255, 0.5);
     }
 
     .acciones {
       display: flex;
       gap: 0.4rem;
-      flex-wrap: wrap;
     }
 
-    @media (max-width: 900px) {
-      body {
-        flex-direction: column;
-      }
-      .sidebar {
-        flex-direction: row;
-        align-items: center;
-        height: auto;
-        width: 100%;
-        padding: 1rem;
-        position: static;
-      }
-      .sidebar-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-      .sidebar-footer {
-        flex-direction: row;
-        margin-top: 0;
-        margin-left: auto;
-      }
-      .main {
-        padding: 1.5rem 1.2rem;
-      }
-      .table-wrapper {
-        border-radius: 10px;
-      }
+    .btn-secondary {
+      border: 1px solid rgba(179, 136, 255, 0.6);
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .btn-danger {
+      background: linear-gradient(90deg, #ff3b3b, #ff0077);
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      color: white;
+      text-decoration: none;
     }
   </style>
 </head>
+
 <body>
 
   <aside class="sidebar">
@@ -351,36 +263,32 @@
             <th>Precio</th>
             <th>Categoría</th>
             <th>Imagen</th>
-            <th style="width: 190px;">Acciones</th>
+            <th>Acciones</th>
           </tr>
         </thead>
+
         <tbody id="tabla-productos">
           <% productos.forEach(p => { %>
           <tr>
             <td><%= p.nombre %></td>
             <td>$<%= p.precio %></td>
             <td><%= p.categoria %></td>
-            <td>
-              <% if (p.img) { %>
-                <img src="<%= p.img %>" alt="<%= p.nombre %>">
-              <% } else { %>
-                <span style="opacity:.7;">Sin imagen</span>
-              <% } %>
-            </td>
+
+<td>
+  <% if (p.img) { %>
+<img src="/assets/img/<%= p.img %>" 
+     alt="<%= p.nombre %>"
+     style="width:60px;height:60px;border-radius:10px;object-fit:cover;">
+
+  <% } else { %>
+    <span style="opacity:.7;">Sin imagen</span>
+  <% } %>
+</td>
+
             <td>
               <div class="acciones">
-                <a
-                  href="/admin/productos/editar/<%= p.id %>"
-                  class="btn-secondary"
-                >
-                  Editar
-                </a>
-                <a
-                  href="/admin/productos/eliminar/<%= p.id %>"
-                  class="btn-danger"
-                >
-                  Eliminar
-                </a>
+                <a href="/admin/productos/editar/<%= p.id %>" class="btn-secondary">Editar</a>
+                <a href="/admin/productos/eliminar/<%= p.id %>" class="btn-danger">Eliminar</a>
               </div>
             </td>
           </tr>
@@ -396,12 +304,12 @@
 
     buscador.addEventListener("input", () => {
       const filtro = buscador.value.toLowerCase();
-
       filas.forEach(fila => {
         const texto = fila.innerText.toLowerCase();
         fila.style.display = texto.includes(filtro) ? "" : "none";
       });
     });
   </script>
+
 </body>
 </html>

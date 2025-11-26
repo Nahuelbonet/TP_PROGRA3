@@ -13,19 +13,23 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// =====================================
-// Configuración básica
-// =====================================
+// ===================================================
+// Configuración básica del server
+// ===================================================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+// Servir los archivos tal cual los pide la BD: /assets/img/archivo.jpg
+app.use('/assets/img', express.static(path.join(__dirname, '../../Frontend/assets/img')));
+
+
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
 
-// =====================================
-// CORS
-// =====================================
+// ===================================================
+// CORS permitido
+// ===================================================
 const whiteList = [
   "http://localhost:5500",
   "http://127.0.0.1:5500",
@@ -40,16 +44,16 @@ app.use(cors({
   }
 }));
 
-// =====================================
-// Endpoint público: test
-// =====================================
+// ===================================================
+// Test del backend
+// ===================================================
 app.get("/", (req, res) => {
   res.json({ message: "Servidor Express funcionando correctamente" });
 });
 
-// =====================================
-// Productos pública (cliente)
-// =====================================
+// ===================================================
+// Productos públicos (para el cliente)
+// ===================================================
 app.get("/productos", async (req, res) => {
   try {
     const pool = await db;
@@ -61,9 +65,9 @@ app.get("/productos", async (req, res) => {
   }
 });
 
-// =====================================
-// Registrar compra (cliente)
-// =====================================
+// ===================================================
+// Registrar compra del cliente
+// ===================================================
 app.post("/comprar", async (req, res) => {
   try {
     const { productos } = req.body;
@@ -74,6 +78,7 @@ app.post("/comprar", async (req, res) => {
 
     const pool = await db;
 
+    // total de la compra
     const total = productos.reduce((acc, p) =>
       acc + (p.precio * p.cantidad), 0
     );
@@ -89,7 +94,7 @@ app.post("/comprar", async (req, res) => {
 
     const idVenta = ventaQuery.recordset[0].id;
 
-    // Insertar productos vendidos
+    // Insertar productos de la venta
     for (const p of productos) {
       await pool.request()
         .input("id_venta", idVenta)
@@ -110,9 +115,9 @@ app.post("/comprar", async (req, res) => {
   }
 });
 
-// =====================================
+// ===================================================
 // LOGIN ADMIN
-// =====================================
+// ===================================================
 app.get("/admin/login", (req, res) => {
   res.render("admin/login");
 });
@@ -124,7 +129,7 @@ app.post("/admin/login", (req, res) => {
     return res.render("admin/login", { error: "Credenciales incorrectas" });
   }
 
-  // JSON completo = lo que pide el TP
+  // datos del admin
   const payload = {
     id: 1,
     user: "admin",
@@ -132,6 +137,7 @@ app.post("/admin/login", (req, res) => {
     permisos: ["crud_productos", "ver_ventas"]
   };
 
+  // token
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: "1h"
   });
@@ -142,24 +148,19 @@ app.post("/admin/login", (req, res) => {
     maxAge: 60 * 60 * 1000
   });
 
-  return res.redirect("/admin/dashboard");
+  res.redirect("/admin/dashboard");
 });
 
-// =====================================
-// RUTAS ADMIN — TODAS PROTEGIDAS
-// =====================================
-
-// Dashboard
+// ===================================================
+// Dashboard admin
+// ===================================================
 app.get("/admin/dashboard", authMiddleware, (req, res) => {
   res.render("admin/dashboard");
 });
 
-// =====================================
-// PRODUCTOS (CRUD)
-// Req. permiso: crud_productos
-// =====================================
-
-// Listado
+// ===================================================
+// CRUD PRODUCTOS (ADMIN)
+// ===================================================
 app.get("/admin/productos",
   authMiddleware,
   requirePermission("crud_productos"),
@@ -175,7 +176,7 @@ app.get("/admin/productos",
   }
 );
 
-// Nuevo producto
+// Nuevo
 app.get("/admin/productos/nuevo",
   authMiddleware,
   requirePermission("crud_productos"),
@@ -192,7 +193,6 @@ app.post("/admin/productos/nuevo",
       const { nombre, precio, categoria, img } = req.body;
 
       const pool = await db;
-
       await pool.request()
         .input("nombre", nombre)
         .input("precio", precio)
@@ -204,7 +204,6 @@ app.post("/admin/productos/nuevo",
         `);
 
       res.redirect("/admin/productos");
-
     } catch (err) {
       console.error(err);
       res.send("Error al guardar producto");
@@ -223,9 +222,11 @@ app.get("/admin/productos/editar/:id",
         .input("id", req.params.id)
         .query("SELECT * FROM productos WHERE id = @id");
 
-      if (result.recordset.length === 0) return res.send("Producto no encontrado");
+      if (result.recordset.length === 0)
+        return res.send("Producto no encontrado");
 
       res.render("admin/producto_editar", { producto: result.recordset[0] });
+
     } catch (err) {
       console.error(err);
       res.send("Error al cargar edición");
@@ -241,7 +242,6 @@ app.post("/admin/productos/editar/:id",
       const { nombre, precio, categoria, img } = req.body;
 
       const pool = await db;
-
       await pool.request()
         .input("id", req.params.id)
         .input("nombre", nombre)
@@ -258,7 +258,6 @@ app.post("/admin/productos/editar/:id",
         `);
 
       res.redirect("/admin/productos");
-
     } catch (err) {
       console.error(err);
       res.send("Error al guardar edición");
@@ -266,7 +265,9 @@ app.post("/admin/productos/editar/:id",
   }
 );
 
-// Eliminar
+// ===================================================
+// ELIMINAR PRODUCTO (FIX COMPLETO)
+// ===================================================
 app.get("/admin/productos/eliminar/:id",
   authMiddleware,
   requirePermission("crud_productos"),
@@ -277,7 +278,8 @@ app.get("/admin/productos/eliminar/:id",
         .input("id", req.params.id)
         .query("SELECT * FROM productos WHERE id = @id");
 
-      if (result.recordset.length === 0) return res.send("Producto no encontrado");
+      if (result.recordset.length === 0)
+        return res.send("Producto no encontrado");
 
       res.render("admin/producto_eliminar", { producto: result.recordset[0] });
 
@@ -288,33 +290,47 @@ app.get("/admin/productos/eliminar/:id",
   }
 );
 
+// POST eliminar — ahora funcional 100%
 app.post("/admin/productos/eliminar/:id",
   authMiddleware,
   requirePermission("crud_productos"),
   async (req, res) => {
     try {
+      const id = req.params.id;
       const pool = await db;
+
+      // Primero borro ventas asociadas del producto
       await pool.request()
-        .input("id", req.params.id)
-        .query("DELETE FROM productos WHERE id = @id");
+        .input("id", id)
+        .query(`
+          DELETE FROM ventas_productos
+          WHERE id_producto = @id
+        `);
+
+      // Ahora si, borro el producto
+      await pool.request()
+        .input("id", id)
+        .query(`
+          DELETE FROM productos
+          WHERE id = @id
+        `);
 
       res.redirect("/admin/productos");
 
     } catch (err) {
-      console.error(err);
-      res.send("Error al eliminar");
+      console.error("ERROR AL ELIMINAR PRODUCTO:", err);
+      res.status(500).send("Error al eliminar producto");
     }
   }
 );
 
-// =====================================
-// VENTAS — Permiso: ver_ventas
-// =====================================
+// ===================================================
+// VENTAS ADMIN
+// ===================================================
 app.get("/admin/ventas",
   authMiddleware,
   requirePermission("ver_ventas"),
   async (req, res) => {
-
     try {
       const pool = await db;
 
@@ -328,7 +344,6 @@ app.get("/admin/ventas",
       `);
 
       res.render("admin/ventas", { ventas: result.recordset });
-
     } catch (err) {
       console.error(err);
       res.send("Error ventas");
@@ -341,7 +356,6 @@ app.get("/admin/ventas/:id",
   authMiddleware,
   requirePermission("ver_ventas"),
   async (req, res) => {
-
     try {
       const pool = await db;
 
@@ -349,7 +363,8 @@ app.get("/admin/ventas/:id",
         .input("id", req.params.id)
         .query("SELECT * FROM ventas WHERE id = @id");
 
-      if (venta.recordset.length === 0) return res.send("Venta no encontrada");
+      if (venta.recordset.length === 0)
+        return res.send("Venta no encontrada");
 
       const productos = await pool.request()
         .input("id", req.params.id)
@@ -375,17 +390,17 @@ app.get("/admin/ventas/:id",
   }
 );
 
-// =====================================
-// LOGOUT (También protegido)
-// =====================================
+// ===================================================
+// LOGOUT
+// ===================================================
 app.get("/admin/logout", authMiddleware, (req, res) => {
   res.clearCookie("token");
   res.redirect("/admin/login");
 });
 
-// =====================================
-// SERVIDOR
-// =====================================
+// ===================================================
+// SERVER
+// ===================================================
 app.listen(3000, () => {
   console.log("Servidor corriendo en http://localhost:3000");
 });

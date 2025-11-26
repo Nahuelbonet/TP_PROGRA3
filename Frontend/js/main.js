@@ -84,7 +84,7 @@ function renderizarProductos(lista, filtro = "") {
     div.classList.add("card");
 
     div.innerHTML = `
-      <img src="${producto.img}" alt="${producto.nombre}">
+      <img src="./assets/img/${producto.img}" alt="${producto.nombre}">
       <h3>${producto.nombre}</h3>
       <p>$${producto.precio}</p>
       <button class="add-to-cart" id-prod="${producto.id}">Agregar al carrito</button>
@@ -187,7 +187,7 @@ function mostrarCarrito() {
     div.classList.add("cart-product");
 
     div.innerHTML = `
-      <img src="${producto.img}">
+      <img src="./assets/img/${producto.img}">
       <div class="cart-info">
         <h3>${producto.nombre}</h3>
         <p>$${producto.precio * producto.cantidad}</p>
@@ -354,11 +354,8 @@ async function finalizarCompra() {
     const data = await resp.json();
 
     if (resp.ok) {
-
-      // NO borrar el carrito acá
       window.location.href =
         "/Electronics_Store/Frontend/compra_confirmada.html?idVenta=" + data.idVenta;
-
     } else {
       alert("Error al procesar la compra");
     }
