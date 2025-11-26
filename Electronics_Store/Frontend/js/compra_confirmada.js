@@ -4,8 +4,8 @@
 const params = new URLSearchParams(window.location.search);
 const idVenta = params.get("idVenta");
 
-// Mostramos el id real
-document.getElementById("nro-orden").innerText = "#" + idVenta;
+// Evita #null
+document.getElementById("nro-orden").innerText = idVenta ? `#${idVenta}` : "—";
 
 
 // ==========================
@@ -34,11 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
     tbody.appendChild(fila);
   });
 
-  // Mostrar total final
+  // Total
   document.getElementById("total-final").textContent =
     "$" + total.toLocaleString();
 
-  // Mostrar fecha actual
+  // Fecha
   const fecha = new Date();
   const fechaFormateada = fecha.toLocaleDateString("es-AR", {
     day: "2-digit",
@@ -47,13 +47,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   document.getElementById("fecha-hoy").textContent = fechaFormateada;
 
-  // Eliminar carrito después de usarlo
-  setTimeout(() => localStorage.removeItem("carrito"), 500);
+  // 🔥 BORRAR EL CARRITO CUANDO EL USUARIO SE VA
+  window.addEventListener("beforeunload", () => {
+    localStorage.removeItem("carrito");
+  });
 
-
-  // ==========================
-  // BOTÓN VOLVER
-  // ==========================
+  // Volver
   document.getElementById("volver").addEventListener("click", () => {
     window.location.href = "index.html";
   });
@@ -86,26 +85,22 @@ function generarTicketPDF() {
   pdf.line(20, y, 190, y);
   y += 10;
 
-  // Datos de la compra
+  // Datos
   const numeroOrden = document.getElementById("nro-orden").innerText;
   const fechaHoy = document.getElementById("fecha-hoy").innerText;
   const usuario = document.getElementById("nombre-usuario").innerText;
 
   pdf.setFontSize(12);
-  pdf.text(`Ticket de Compra`, 20, y);
-  y += 7;
-  pdf.text(`N° de Orden: ${numeroOrden}`, 20, y);
-  y += 7;
-  pdf.text(`Cliente: ${usuario}`, 20, y);
-  y += 7;
-  pdf.text(`Fecha: ${fechaHoy}`, 20, y);
-  y += 15;
+  pdf.text(`Ticket de Compra`, 20, y); y += 7;
+  pdf.text(`N° de Orden: ${numeroOrden}`, 20, y); y += 7;
+  pdf.text(`Cliente: ${usuario}`, 20, y); y += 7;
+  pdf.text(`Fecha: ${fechaHoy}`, 20, y); y += 15;
 
   pdf.setFontSize(14);
   pdf.text("Detalle del pedido:", 20, y);
   y += 10;
 
-  // Tabla manual
+  // Tabla
   const filas = document.querySelectorAll("#lista-productos tr");
 
   filas.forEach((fila) => {

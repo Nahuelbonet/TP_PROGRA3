@@ -1,0 +1,26 @@
+/* MODO OSCURO PARA EL PANEL ADMIN */
+.dark-mode {
+    background: #0d0d0f !important;
+}
+
+.dark-mode .card-container {
+    background: rgba(20,20,30,0.8) !important;
+}
+
+/* Botón del modo oscuro */
+#dark-toggle {
+    position: absolute;
+    top: 18px;
+    right: 25px;
+    font-size: 24px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #fff;
+    z-index: 1000;
+    transition: 0.3s;
+}
+
+#dark-toggle:hover {
+    transform: scale(1.15);
+}

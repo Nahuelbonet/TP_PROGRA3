@@ -1,55 +1,154 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Login Admin</title>
-    <style>
-        body {
-            font-family: Arial;
-            background: #f4f4f4;
-            padding: 40px;
-        }
-        .login-box {
-            width: 350px;
-            padding: 25px;
-            margin: auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px #ccc;
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 12px;
-        }
-        .error {
-            background: #ffcccc;
-            padding: 10px;
-            margin-top: 15px;
-            color: #b30000;
-            border-left: 4px solid #b30000;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Login Admin | Electronics Store</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      --card-bg: rgba(255, 255, 255, 0.06);
+      --accent: #b388ff;
+      --accent-strong: #7b2ff7;
+      --accent-strong-2: #f107a3;
+      --danger: #ff3b3b;
+      --text-main: #f1f1f1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--text-main);
+    }
+
+    .login-card {
+      background: var(--card-bg);
+      width: 380px;
+      padding: 2.6rem 2.8rem;
+      border-radius: 18px;
+      box-shadow: 0 0 25px rgba(179, 136, 255, 0.4);
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      text-shadow: 0 0 12px var(--accent);
+    }
+
+    input {
+      width: 100%;
+      padding: 0.9rem;
+      margin-top: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 0.95rem;
+      transition: 0.25s;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 12px rgba(179, 136, 255, 0.8);
+      border-color: var(--accent);
+    }
+
+    button {
+      margin-top: 18px;
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent-strong), var(--accent-strong-2));
+      box-shadow: 0 0 15px rgba(179, 136, 255, 0.6);
+      transition: 0.25s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 22px rgba(179, 136, 255, 0.8);
+    }
+
+    .error {
+      margin-top: 15px;
+      padding: 12px;
+      background: rgba(255, 0, 50, 0.25);
+      border-left: 4px solid var(--danger);
+      color: #ffd0d0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 16px;
+      color: var(--accent);
+      text-decoration: none;
+      transition: 0.25s;
+    }
+
+    a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px var(--accent);
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="login-box">
-
+  <div class="login-card">
     <h2>Panel Admin</h2>
 
     <% if (typeof error !== "undefined") { %>
-        <div class="error"><%= error %></div>
+      <div class="error"><%= error %></div>
     <% } %>
 
     <form action="/admin/login" method="POST">
-        <input type="text" name="user" placeholder="Usuario" required>
-        <input type="password" name="pass" placeholder="Contraseña" required>
-        <button type="submit">Ingresar</button>
+      <input type="text" name="user" placeholder="Usuario" required>
+      <input type="password" name="pass" placeholder="Contraseña" required>
+      <button type="submit">Ingresar</button>
     </form>
 
-    <br>
-    <a href="/">Volver al sitio</a>
-</div>
+    <!-- BOTÓN CORREGIDO -->
+    <a href="#" id="volver-sitio">Volver al sitio</a>
+  </div>
+
+  <script>
+    document.getElementById("volver-sitio").addEventListener("click", () => {
+      // Borra el usuario guardado del frontend
+      localStorage.removeItem("userName");
+
+      // Lleva SIEMPRE a la bienvenida
+      window.location.href =
+        "http://127.0.0.1:5500/Electronics_Store/Frontend/bienvenida.html";
+    });
+  </script>
 
 </body>
 </html>

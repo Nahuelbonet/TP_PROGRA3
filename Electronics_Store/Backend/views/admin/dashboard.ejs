@@ -1,29 +1,371 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <title>Panel Admin</title>
-    <link rel="stylesheet" href="/admin_dark.css">
+  <meta charset="UTF-8">
+  <title>Panel de Administración | Electronics Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --accent: #b388ff;
+      --accent-strong: #7b2ff7;
+      --accent-strong-2: #f107a3;
+      --danger: #ff3b3b;
+      --danger-2: #ff0077;
+      --text-main: #f1f1f1;
+    }
 
-    <style>
-        body { font-family: Arial; padding:20px; background:#f4f4f4; }
-        .btn { display:block; width:250px; padding:12px; margin:10px 0; background:#333; color:white; text-align:center;
-               border-radius:6px; text-decoration:none; }
-        .btn:hover { background:#555; }
-    </style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 260px;
+      background: rgba(10, 10, 25, 0.98);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .sidebar-logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-shadow: 0 0 15px var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-subtitle {
+      font-size: 0.85rem;
+      opacity: 0.75;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 0.7rem 0.9rem;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #e0dcff;
+      font-size: 0.93rem;
+      background: transparent;
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(179, 136, 255, 0.08);
+      border-color: rgba(179, 136, 255, 0.5);
+      box-shadow: 0 0 12px rgba(179, 136, 255, 0.4);
+      transform: translateX(3px);
+    }
+
+    .sidebar-link.active {
+      background: linear-gradient(135deg, var(--accent-strong), var(--accent-strong-2));
+      box-shadow: 0 0 15px rgba(179, 136, 255, 0.7);
+      color: #fff;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .btn-logout {
+      background: linear-gradient(90deg, var(--danger), var(--danger-2));
+      border-radius: 10px;
+      padding: 0.7rem 0.9rem;
+      border: none;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 0, 77, 0.5);
+      transition: all 0.25s ease;
+    }
+
+    .btn-logout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(255, 0, 77, 0.9);
+    }
+
+    .btn-store {
+      display: block;
+      padding: 0.6rem 0.9rem;
+      border-radius: 10px;
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+      border: 1px solid rgba(179, 136, 255, 0.6);
+      background: rgba(179, 136, 255, 0.12);
+      box-shadow: 0 0 10px rgba(179, 136, 255, 0.4);
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+    }
+
+    .btn-store:hover {
+      background: rgba(179, 136, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* MAIN AREA */
+    .main {
+      flex: 1;
+      padding: 2rem 3rem;
+    }
+
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .main-header-title {
+      font-size: 1.8rem;
+      text-shadow: 0 0 12px var(--accent);
+    }
+
+    .main-header-subtitle {
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+
+    .chip {
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* CARDS */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 140%;
+      height: 140%;
+      top: -50%;
+      right: -60%;
+      background: radial-gradient(circle at top, rgba(179, 136, 255, 0.25), transparent 55%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+      opacity: 0.85;
+    }
+
+    .card-value {
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(179, 136, 255, 0.7);
+    }
+
+    .card-desc {
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .card-actions {
+      margin-top: 1.2rem;
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 0.6rem 1.1rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-strong), var(--accent-strong-2));
+      color: #fff;
+      box-shadow: 0 0 15px rgba(179, 136, 255, 0.7);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(179, 136, 255, 0.9);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(179, 136, 255, 0.6);
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(179, 136, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        flex-direction: row;
+        align-items: center;
+        height: auto;
+        width: 100%;
+        padding: 1rem;
+        position: static;
+      }
+      .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .sidebar-footer {
+        flex-direction: row;
+        margin-top: 0;
+        margin-left: auto;
+      }
+      .main {
+        padding: 1.5rem 1.2rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<button id="dark-toggle" class="dark-btn">🌙</button>
+  <aside class="sidebar">
+    <div>
+      <div class="sidebar-logo">Electronics Store</div>
+      <div class="sidebar-subtitle">Panel de administración</div>
 
-<h1>Bienvenido al Panel de Administración</h1>
+      <nav class="sidebar-nav">
+        <a href="/admin/dashboard" class="sidebar-link active">📊 Dashboard</a>
+        <a href="/admin/productos" class="sidebar-link">📦 Productos</a>
+        <a href="/admin/ventas" class="sidebar-link">🧾 Ventas</a>
+      </nav>
+    </div>
 
-<a class="btn" href="/admin/productos">Administrar Productos</a>
-<a class="btn" href="/admin/ventas">Ver Ventas</a>
-<a class="btn" href="/">Ir al Portal Cliente</a>
-<a class="btn" href="/admin/logout">Cerrar sesión</a>
+    <div class="sidebar-footer">
+      <a
+        class="btn-store"
+        href="http://127.0.0.1:5500/Electronics_Store/Frontend/index.html"
+      >
+        🛒 Volver a la tienda
+      </a>
+      <a class="btn-logout" href="/admin/logout">Cerrar sesión</a>
+    </div>
+  </aside>
 
-<script src="/admin_darkmode.js"></script>
+  <main class="main">
+    <header class="main-header">
+      <div>
+        <h1 class="main-header-title">Dashboard</h1>
+        <p class="main-header-subtitle">
+          Bienvenido, administrador. Desde aquí podés gestionar productos y revisar ventas.
+        </p>
+      </div>
+      <div class="chip">Admin</div>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <h2 class="card-title">Gestión de productos</h2>
+        <p class="card-value">Productos</p>
+        <p class="card-desc">
+          Agregá, editá o eliminá artículos disponibles en la tienda.
+        </p>
+        <div class="card-actions">
+          <a href="/admin/productos" class="btn-primary">Ir a productos</a>
+          <a href="/admin/productos/nuevo" class="btn-secondary">Nuevo producto</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2 class="card-title">Ventas registradas</h2>
+        <p class="card-value">Historial</p>
+        <p class="card-desc">
+          Consultá las ventas realizadas y detallá los productos vendidos.
+        </p>
+        <div class="card-actions">
+          <a href="/admin/ventas" class="btn-primary">Ver ventas</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2 class="card-title">Portal del cliente</h2>
+        <p class="card-value">Frontend</p>
+        <p class="card-desc">
+          Abrir la tienda tal como la ve el cliente, para probar el flujo de compra.
+        </p>
+        <div class="card-actions">
+          <a
+            href="http://127.0.0.1:5500/Electronics_Store/Frontend/index.html"
+            class="btn-secondary"
+          >
+            Ir a la tienda
+          </a>
+        </div>
+      </article>
+    </section>
+
+  </main>
 </body>
 </html>

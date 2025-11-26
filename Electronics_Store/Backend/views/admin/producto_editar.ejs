@@ -1,34 +1,186 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <title>Editar Producto</title>
-  <link rel="stylesheet" href="/admin_dark.css">
+  <meta charset="utf-8" />
+  <title>Editar Producto | Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
-    body { font-family: Arial; padding:20px; }
-    input { width:100%; padding:10px; margin-top:10px; }
-    button { margin-top:10px; padding:10px; width:100%; background:#333; color:white; border:none; border-radius:5px; cursor:pointer; }
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --accent: #b388ff;
+      --accent-strong: #7b2ff7;
+      --accent-strong-2: #f107a3;
+      --text-main: #f1f1f1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      color: var(--text-main);
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 520px;
+      padding: 2.5rem 2.2rem 2.4rem;
+      border-radius: 20px;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 60%),
+                  rgba(10, 10, 35, 0.92);
+      box-shadow:
+        0 0 30px rgba(0, 0, 0, 0.7),
+        0 0 60px rgba(123, 47, 247, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      text-align: center;
+    }
+
+    .title {
+      font-size: 1.7rem;
+      margin-bottom: 1.8rem;
+      color: #ffffff;
+      text-shadow: 0 0 14px var(--accent);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin-bottom: 1.4rem;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.9rem 1rem;
+      background: rgba(15, 12, 41, 0.7);
+      color: #f9f9ff;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    input:focus {
+      border-color: rgba(179, 136, 255, 0.9);
+      box-shadow: 0 0 12px rgba(179, 136, 255, 0.6);
+      background: rgba(15, 12, 41, 0.9);
+    }
+
+    button[type="submit"] {
+      margin-top: 0.5rem;
+      width: 100%;
+      border-radius: 999px;
+      border: none;
+      padding: 0.9rem 1.2rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent-strong), var(--accent-strong-2));
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      box-shadow:
+        0 0 18px rgba(123, 47, 247, 0.8),
+        0 0 26px rgba(241, 7, 163, 0.5);
+      transition: all 0.25s ease;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 22px rgba(123, 47, 247, 1),
+        0 0 30px rgba(241, 7, 163, 0.8);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      color: rgba(241, 241, 255, 0.85);
+      text-decoration: none;
+      padding: 0.45rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(0, 0, 0, 0.15);
+      transition: all 0.25s ease;
+    }
+
+    .back-link:hover {
+      background: rgba(179, 136, 255, 0.18);
+      border-color: rgba(179, 136, 255, 0.7);
+      box-shadow: 0 0 12px rgba(179, 136, 255, 0.6);
+    }
+
+    @media (max-width: 600px) {
+      .wrapper {
+        padding: 2.1rem 1.6rem 2rem;
+      }
+      .title {
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <section class="wrapper">
+    <h1 class="title">Editar Producto</h1>
 
-<button id="dark-toggle" class="dark-btn">🌙</button>
+    <form method="POST" action="/admin/productos/editar/<%= producto.id %>">
+      <input
+        type="text"
+        name="nombre"
+        value="<%= producto.nombre %>"
+        placeholder="Nombre del producto"
+        required
+      />
+      <input
+        type="number"
+        name="precio"
+        value="<%= producto.precio %>"
+        placeholder="Precio"
+        required
+      />
+      <input
+        type="text"
+        name="categoria"
+        value="<%= producto.categoria %>"
+        placeholder="Categoría"
+        required
+      />
+      <input
+        type="text"
+        name="img"
+        value="<%= producto.img %>"
+        placeholder="Nombre de archivo de imagen (ej: galaxy-s23.jpg)"
+        required
+      />
 
-<h1>Editar Producto</h1>
+      <button type="submit">Guardar Cambios</button>
+    </form>
 
-<form method="POST" action="/admin/productos/editar/<%= producto.id %>">
-  <input type="text" name="nombre" value="<%= producto.nombre %>" required>
-  <input type="number" name="precio" value="<%= producto.precio %>" required>
-  <input type="text" name="categoria" value="<%= producto.categoria %>" required>
-  <input type="text" name="img" value="<%= producto.img %>" required>
-
-  <button type="submit">Guardar Cambios</button>
-</form>
-
-<a href="/admin/productos">Volver</a>
-
-<script src="/admin_darkmode.js"></script>
+    <a href="/admin/productos" class="back-link">Volver</a>
+  </section>
 </body>
 </html>

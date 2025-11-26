@@ -84,7 +84,7 @@ function renderizarProductos(lista, filtro = "") {
     div.classList.add("card");
 
     div.innerHTML = `
-      <img src="${producto.img}" alt="${producto.nombre}">
+      <img src="./assets/img/${producto.img}" alt="${producto.nombre}">
       <h3>${producto.nombre}</h3>
       <p>$${producto.precio}</p>
       <button class="add-to-cart" id-prod="${producto.id}">Agregar al carrito</button>
@@ -140,7 +140,7 @@ function filtrarPorCategoria() {
       e.preventDefault();
       const categoria = e.target.getAttribute("data-categoria");
 
-      let filtrados =
+      const filtrados =
         categoria.toLowerCase() === "todos"
           ? productosGlobal
           : productosGlobal.filter(
@@ -187,7 +187,7 @@ function mostrarCarrito() {
     div.classList.add("cart-product");
 
     div.innerHTML = `
-      <img src="${producto.img}">
+      <img src="./assets/img/${producto.img}">
       <div class="cart-info">
         <h3>${producto.nombre}</h3>
         <p>$${producto.precio * producto.cantidad}</p>
@@ -334,7 +334,7 @@ if (logoutButton) {
 }
 
 // ===============================
-// FINALIZAR COMPRA
+// FINALIZAR COMPRA (CORREGIDO)
 // ===============================
 async function finalizarCompra() {
   const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -354,8 +354,8 @@ async function finalizarCompra() {
     const data = await resp.json();
 
     if (resp.ok) {
-      localStorage.removeItem("carrito");
-      window.location.href = "/Frontend/compra_confirmada.html?idVenta=" + idVenta;
+      window.location.href =
+        "/Electronics_Store/Frontend/compra_confirmada.html?idVenta=" + data.idVenta;
     } else {
       alert("Error al procesar la compra");
     }
@@ -365,7 +365,7 @@ async function finalizarCompra() {
 }
 
 // ===============================
-// MODO OSCURO (FINAL)
+// MODO OSCURO
 // ===============================
 function iniciarModoOscuro() {
   const toggle = document.getElementById("dark-toggle");
@@ -377,7 +377,10 @@ function iniciarModoOscuro() {
 
   toggle.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
-    localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+    localStorage.setItem(
+      "darkMode",
+      document.body.classList.contains("dark-mode")
+    );
   });
 }
 
