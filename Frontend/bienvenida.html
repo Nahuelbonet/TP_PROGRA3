@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electronics Store</title>
+    <link rel="icon" type="image/png" href="./assets/img/icono_pc.ico" />
+    <link rel="stylesheet" href="./assets/css/bienvenida.css" />
+    <link rel="stylesheet" href="./assets/css/darkmode.css">
+
+  </head>
+  <body>
+    <div class="container" id="login-container">
+      <h2>Bienvenido a Electronics Store</h2>
+
+      <form id="login-form">
+        <div class="input-group">
+          <label for="nombre">Ingresa tu Nombre:</label>
+          <input
+            class="form_input"
+            type="text"
+            id="nombre"
+            required
+            placeholder="Ej: Juan Pérez"
+          />
+        </div>
+        <button type="submit">Ingresar</button>
+      </form>
+    </div>
+
+    <div class="container hidden" id="site-content">
+      <h1 id="welcome-message"></h1>
+      <p>¡Has accedido al sitio con éxito!</p>
+    </div>
+
+    <script src="./js/bienvenida.js"></script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Administración</title>
+    <link rel="icon" type="image/png" href="./assets/img/icono_pc.ico" />
+    <link rel="stylesheet" href="./assets/css/admin.css" />
+    <link rel="stylesheet" href="./assets/css/darkmode.css">
+
+  </head>
+  <body>
+    <header>
+      <h1>Panel de Administración</h1>
+      <button id="cerrar-sesion">Cerrar Sesión</button>
+    </header>
+
+    <main>
+      <section class="agregar-producto">
+        <h2>Agregar Producto</h2>
+        <form id="form-agregar">
+          <input
+            type="text"
+            id="nombre"
+            placeholder="Nombre del producto"
+            required
+          />
+          <input
+            type="number"
+            id="precio"
+            placeholder="Precio"
+            step="0.01"
+            required
+          />
+          <input
+            type="text"
+            id="imagen"
+            placeholder="URL de imagen (opcional)"
+          />
+          <button type="submit">Agregar</button>
+        </form>
+      </section>
+
+      <section class="lista">
+        <h2>Lista de Productos</h2>
+        <div id="lista-productos"></div>
+      </section>
+    </main>
+
+    <script>
+      // 
+      document.addEventListener("DOMContentLoaded", () => {
+        const isAdmin = localStorage.getItem("isAdmin");
+        if (!isAdmin) {
+          alert("Acceso denegado. Solo administradores pueden ingresar.");
+          window.location.href = "bienvenida.html";
+        }
+      });
+    </script>
+
+    <script src="./js/admin.js"></script>
+  </body>
+</html>
