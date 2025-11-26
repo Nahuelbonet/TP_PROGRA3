@@ -1,40 +1,53 @@
 // ===============================
 // VARIABLES GLOBALES
 // ===============================
+
+// Carrito actual del usuario
 const carrito = [];
+
+// Categoría seleccionada por defecto
 let categoriaActual = "Todos";
+
+// Lista completa de productos traída desde el backend
 let productosGlobal = [];
+
+// Lista de productos filtrados u ordenados
 let productosFiltrados = [];
 
+
 // ===============================
-// FUNCIÓN PRINCIPAL
+// FUNCIÓN PRINCIPAL - ARRANCA TODO
 // ===============================
 function init() {
-  obtenerProductos();
-  filtrarProductos();
-  ordenarPorNombre();
-  ordenarPorPrecio();
-  cargarCarrito();
-  vaciarCarrito();
-  mostrarCarrito();
-  ocultarCarrito();
-  actualizarTotal();
-  actualizarContadorCarrito();
-  filtrarPorCategoria();
-  chequearLogin();
-  iniciarModoOscuro();
+  obtenerProductos();          // Trae productos del backend
+  filtrarProductos();          // Habilita buscador
+  ordenarPorNombre();          // Habilita botón ordenar por nombre
+  ordenarPorPrecio();          // Habilita ordenar por precio
+  cargarCarrito();             // Recupera carrito guardado en localStorage
+  vaciarCarrito();             // Botón para vaciar carrito
+  mostrarCarrito();            // Renderiza carrito en pantalla
+  ocultarCarrito();            // Cierra o abre panel del carrito
+  actualizarTotal();           // Actualiza el total del carrito
+  actualizarContadorCarrito(); // Actualiza contador de productos
+  filtrarPorCategoria();       // Habilita filtros de categorías
+  chequearLogin();             // Previene acceso sin login
+  iniciarModoOscuro();         // Activa o recupera el modo oscuro
 
+  // Botón de finalizar compra
   const btnFinalizar = document.getElementById("finalizar_compra");
   if (btnFinalizar) {
     btnFinalizar.addEventListener("click", finalizarCompra);
   }
 }
 
+
 // ===============================
-// LOGIN
+// LOGIN - SI NO ESTÁ LOGUEADO, LO SACA
 // ===============================
 function chequearLogin() {
   const usuarioLogeado = localStorage.getItem("userName");
+
+  // Si no hay usuario → limpiar todo y volver a bienvenida
   if (!usuarioLogeado) {
     setTimeout(() => {
       carrito.length = 0;
@@ -44,8 +57,9 @@ function chequearLogin() {
   }
 }
 
+
 // ===============================
-// PRODUCTOS DESDE BACKEND
+// PRODUCTOS DESDE EL BACKEND
 // ===============================
 async function obtenerProductos(filtro = "") {
   const contenedor = document.querySelector(".lista_productos");
@@ -54,8 +68,11 @@ async function obtenerProductos(filtro = "") {
   try {
     const res = await fetch("http://localhost:3000/productos");
     const productos = await res.json();
+
+    // Guardo la lista global de productos
     productosGlobal = productos;
 
+    // Renderizo productos en pantalla
     renderizarProductos(productos, filtro);
   } catch (error) {
     console.error("Error al obtener productos:", error);
@@ -63,13 +80,15 @@ async function obtenerProductos(filtro = "") {
   }
 }
 
+
 // ===============================
-// RENDERIZAR PRODUCTOS
+// RENDERIZAR PRODUCTOS EN PANTALLA
 // ===============================
 function renderizarProductos(lista, filtro = "") {
   const contenedor = document.querySelector(".lista_productos");
   contenedor.innerHTML = "";
 
+  // Aplicar el filtro por nombre
   const filtrados = lista.filter((producto) =>
     producto.nombre.toLowerCase().includes(filtro.toLowerCase())
   );
@@ -79,6 +98,7 @@ function renderizarProductos(lista, filtro = "") {
     return;
   }
 
+  // Crear tarjeta por cada producto
   filtrados.forEach((producto) => {
     const div = document.createElement("div");
     div.classList.add("card");
@@ -94,24 +114,30 @@ function renderizarProductos(lista, filtro = "") {
   });
 
   productosFiltrados = lista;
+
+  // Activo nuevamente los botones "Agregar al carrito"
   addToCart();
 }
 
+
 // ===============================
-// BUSCADOR
+// BUSCADOR DE PRODUCTOS
 // ===============================
 function filtrarProductos() {
   const input = document.querySelector('input[type="text"]');
+
   input.addEventListener("input", () => {
     renderizarProductos(productosGlobal, input.value);
   });
 }
 
+
 // ===============================
-// ORDENAR
+// ORDENAR POR NOMBRE
 // ===============================
 function ordenarPorNombre() {
   const btn = document.getElementById("ordenar-nombre");
+
   btn.addEventListener("click", () => {
     const lista = [...productosFiltrados].sort((a, b) =>
       a.nombre.localeCompare(b.nombre)
@@ -120,16 +146,22 @@ function ordenarPorNombre() {
   });
 }
 
+
+// ===============================
+// ORDENAR POR PRECIO
+// ===============================
 function ordenarPorPrecio() {
   const btn = document.getElementById("ordenar-precio");
+
   btn.addEventListener("click", () => {
     const lista = [...productosFiltrados].sort((a, b) => a.precio - b.precio);
     renderizarProductos(lista);
   });
 }
 
+
 // ===============================
-// FILTRAR POR CATEGORÍA
+// FILTRO POR CATEGORÍAS
 // ===============================
 function filtrarPorCategoria() {
   const enlaces = document.querySelectorAll(".contenido-desplegable a");
@@ -138,8 +170,10 @@ function filtrarPorCategoria() {
   enlaces.forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
+
       const categoria = e.target.getAttribute("data-categoria");
 
+      // Si elige "Todos", mostrar todos los productos
       const filtrados =
         categoria.toLowerCase() === "todos"
           ? productosGlobal
@@ -147,6 +181,7 @@ function filtrarPorCategoria() {
               (p) => p.categoria.toLowerCase() === categoria.toLowerCase()
             );
 
+      // Cambiar título según la categoría
       titulo.textContent =
         categoria.toLowerCase() === "todos"
           ? "Nuestros Productos"
@@ -157,8 +192,9 @@ function filtrarPorCategoria() {
   });
 }
 
+
 // ===============================
-// CARRITO
+// CARRITO: AGREGAR PRODUCTO
 // ===============================
 function addToCart() {
   const botones = document.querySelectorAll(".add-to-cart");
@@ -167,10 +203,15 @@ function addToCart() {
     btn.addEventListener("click", () => {
       const id = parseInt(btn.getAttribute("id-prod"));
       const producto = productosGlobal.find((p) => p.id === id);
+
+      // Si ya existe en carrito → aumentar cantidad
       const existe = carrito.find((p) => p.id === id);
 
-      if (existe) existe.cantidad++;
-      else carrito.push({ ...producto, cantidad: 1 });
+      if (existe) {
+        existe.cantidad++;
+      } else {
+        carrito.push({ ...producto, cantidad: 1 });
+      }
 
       guardarCarrito();
       mostrarCarrito();
@@ -178,6 +219,10 @@ function addToCart() {
   });
 }
 
+
+// ===============================
+// MOSTRAR CARRITO
+// ===============================
 function mostrarCarrito() {
   const contenedor = document.querySelector(".carrito-items");
   contenedor.innerHTML = "";
@@ -207,7 +252,12 @@ function mostrarCarrito() {
   actualizarContadorCarrito();
 }
 
+
+// ===============================
+// BOTONES + Y - DEL CARRITO
+// ===============================
 function configurarBotonesCantidad() {
+  // Botón "+"
   document.querySelectorAll(".increase").forEach((btn) =>
     btn.addEventListener("click", (e) => {
       const index = parseInt(e.target.dataset.index);
@@ -217,9 +267,12 @@ function configurarBotonesCantidad() {
     })
   );
 
+  // Botón "-"
   document.querySelectorAll(".decrease").forEach((btn) =>
     btn.addEventListener("click", (e) => {
       const index = parseInt(e.target.dataset.index);
+
+      // Si queda en 0 → eliminar producto
       if (carrito[index].cantidad > 1) carrito[index].cantidad--;
       else carrito.splice(index, 1);
 
@@ -229,8 +282,9 @@ function configurarBotonesCantidad() {
   );
 }
 
+
 // ===============================
-// LOCALSTORAGE
+// LOCALSTORAGE: GUARDAR Y RECUPERAR CARRITO
 // ===============================
 function guardarCarrito() {
   localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -244,6 +298,10 @@ function cargarCarrito() {
   }
 }
 
+
+// ===============================
+// VACIAR CARRITO
+// ===============================
 function vaciarCarrito() {
   const btn = document.querySelector(".vaciar");
   if (!btn) return;
@@ -255,19 +313,28 @@ function vaciarCarrito() {
   });
 }
 
+
+// ===============================
+// TOTAL DEL CARRITO
+// ===============================
 function actualizarTotal() {
   const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
   document.querySelector(".carrito-total").innerText = `Total: $${total}`;
 }
 
+
+// ===============================
+// CONTADOR DE ÍTEMS DEL CARRITO
+// ===============================
 function actualizarContadorCarrito() {
   const contador = document.getElementById("contador_carrito");
   const total = carrito.reduce((acc, p) => acc + p.cantidad, 0);
   contador.innerText = `Carrito-Productos: ${total}`;
 }
 
+
 // ===============================
-// PANEL CARRITO
+// PANEL DEL CARRITO (ABRIR/CERRAR)
 // ===============================
 function ocultarCarrito() {
   const boton = document.querySelector(".boton_carrito");
@@ -288,6 +355,7 @@ function ocultarCarrito() {
   });
 }
 
+
 // ===============================
 // NAVBAR + DROPDOWN
 // ===============================
@@ -304,6 +372,7 @@ if (navToggle && nav) {
   });
 }
 
+// Dropdown dentro del navbar
 const dropdownButtons = document.querySelectorAll(".boton-dropdown");
 
 dropdownButtons.forEach((btn) =>
@@ -320,10 +389,12 @@ dropdownButtons.forEach((btn) =>
   })
 );
 
+
 // ===============================
 // LOGOUT
 // ===============================
 const logoutButton = document.querySelector("#logout-button");
+
 if (logoutButton) {
   logoutButton.addEventListener("click", () => {
     localStorage.removeItem("userName");
@@ -333,8 +404,9 @@ if (logoutButton) {
   });
 }
 
+
 // ===============================
-// FINALIZAR COMPRA (CORREGIDO)
+// FINALIZAR COMPRA (ENVÍA A BACKEND)
 // ===============================
 async function finalizarCompra() {
   const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -345,6 +417,7 @@ async function finalizarCompra() {
   }
 
   try {
+    // Enviar carrito al backend
     const resp = await fetch("http://localhost:3000/comprar", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -353,9 +426,11 @@ async function finalizarCompra() {
 
     const data = await resp.json();
 
+    // Si está OK, redirige al ticket
     if (resp.ok) {
       window.location.href =
-        "/Electronics_Store/Frontend/compra_confirmada.html?idVenta=" + data.idVenta;
+        "/Electronics_Store/Frontend/compra_confirmada.html?idVenta=" +
+        data.idVenta;
     } else {
       alert("Error al procesar la compra");
     }
@@ -364,6 +439,7 @@ async function finalizarCompra() {
   }
 }
 
+
 // ===============================
 // MODO OSCURO
 // ===============================
@@ -371,12 +447,15 @@ function iniciarModoOscuro() {
   const toggle = document.getElementById("dark-toggle");
   if (!toggle) return;
 
+  // Recupero estado guardado
   if (localStorage.getItem("darkMode") === "true") {
     document.body.classList.add("dark-mode");
   }
 
+  // Cambiar de tema
   toggle.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
+
     localStorage.setItem(
       "darkMode",
       document.body.classList.contains("dark-mode")
@@ -384,7 +463,8 @@ function iniciarModoOscuro() {
   });
 }
 
+
 // ===============================
-// INICIO
+// INICIALIZAR TODO
 // ===============================
 document.addEventListener("DOMContentLoaded", init);

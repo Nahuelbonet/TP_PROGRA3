@@ -2,20 +2,36 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <!-- Hace que el diseño sea responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Electronics Store</title>
+
+    <!-- Ícono del sitio -->
     <link rel="icon" type="image/png" href="./assets/img/icono_pc.ico" />
+
+    <!-- Estilos de la pantalla de bienvenida -->
     <link rel="stylesheet" href="./assets/css/bienvenida.css" />
+
+    <!-- Estilos del modo oscuro global del frontend -->
     <link rel="stylesheet" href="./assets/css/darkmode.css">
 
   </head>
+
   <body>
+
+    <!-- ================================
+         CONTENEDOR DE LOGIN
+         ================================ -->
     <div class="container" id="login-container">
       <h2>Bienvenido a Electronics Store</h2>
 
+      <!-- Formulario donde el usuario ingresa su nombre -->
       <form id="login-form">
         <div class="input-group">
           <label for="nombre">Ingresa tu Nombre:</label>
+
+          <!-- Campo para que el usuario escriba su nombre -->
           <input
             class="form_input"
             type="text"
@@ -24,15 +40,23 @@
             placeholder="Ej: Juan Pérez"
           />
         </div>
+
+        <!-- Botón de inicio -->
         <button type="submit">Ingresar</button>
       </form>
     </div>
 
+    <!-- ============================================
+         CONTENIDO QUE APARECE TRAS LOGUEARSE
+         (primero oculto con la clase "hidden")
+         ============================================ -->
     <div class="container hidden" id="site-content">
       <h1 id="welcome-message"></h1>
       <p>¡Has accedido al sitio con éxito!</p>
     </div>
 
+    <!-- Lógica del login (manejo de localStorage, admin, redirecciones) -->
     <script src="./js/bienvenida.js"></script>
+
   </body>
 </html>

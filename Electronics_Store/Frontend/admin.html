@@ -2,29 +2,55 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <!-- Permite que el sitio se vea bien en celulares -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panel de Administración</title>
-    <link rel="icon" type="image/png" href="./assets/img/icono_pc.ico" />
-    <link rel="stylesheet" href="./assets/css/admin.css" />
-    <link rel="stylesheet" href="./assets/css/darkmode.css">
 
+    <title>Panel de Administración</title>
+
+    <!-- Ícono de la pestaña -->
+    <link rel="icon" type="image/png" href="./assets/img/icono_pc.ico" />
+
+    <!-- Estilos específicos del panel admin -->
+    <link rel="stylesheet" href="./assets/css/admin.css" />
+
+    <!-- Modo oscuro -->
+    <link rel="stylesheet" href="./assets/css/darkmode.css">
   </head>
+
   <body>
+    <!-- ===========================
+         ENCABEZADO DEL PANEL ADMIN
+         =========================== -->
     <header>
       <h1>Panel de Administración</h1>
+
+      <!-- Botón para cerrar sesión -->
       <button id="cerrar-sesion">Cerrar Sesión</button>
     </header>
 
+    <!-- ===========================
+         CONTENIDO PRINCIPAL
+         =========================== -->
     <main>
+      
+      <!-- =========================================
+           SECCIÓN: FORMULARIO PARA AGREGAR PRODUCTO
+           ========================================= -->
       <section class="agregar-producto">
         <h2>Agregar Producto</h2>
+
+        <!-- Formulario para enviar un nuevo producto al backend -->
         <form id="form-agregar">
+
+          <!-- Nombre del producto -->
           <input
             type="text"
             id="nombre"
-            placeholder="Nombre del producto"
+            placeholder=" Nombre del producto"
             required
           />
+
+          <!-- Precio del producto -->
           <input
             type="number"
             id="precio"
@@ -32,32 +58,49 @@
             step="0.01"
             required
           />
+
+          <!-- Imagen: opcional, el admin puede poner un link -->
           <input
             type="text"
             id="imagen"
             placeholder="URL de imagen (opcional)"
           />
+
+          <!-- Botón que envía el formulario al código JS -->
           <button type="submit">Agregar</button>
         </form>
       </section>
 
+      <!-- =========================================
+           SECCIÓN: LISTA DE PRODUCTOS CARGADOS
+           ========================================= -->
       <section class="lista">
         <h2>Lista de Productos</h2>
+
+        <!-- Aquí se insertan dinámicamente los productos 
+             traídos desde el backend mediante admin.js -->
         <div id="lista-productos"></div>
       </section>
     </main>
 
+    <!-- =========================================
+         VALIDACIÓN DE ACCESO A NIVEL FRONTEND
+         ========================================= -->
     <script>
-      // 
       document.addEventListener("DOMContentLoaded", () => {
+        // Verifica si el usuario tiene permiso de admin
         const isAdmin = localStorage.getItem("isAdmin");
+
+        // Si no lo es, no puede acceder
         if (!isAdmin) {
           alert("Acceso denegado. Solo administradores pueden ingresar.");
-          window.location.href = "bienvenida.html";
+          window.location.href = "bienvenida.html"; // Redirección al inicio
         }
       });
     </script>
 
+    <!-- Lógica del panel administrador (agregar, editar y borrar productos) -->
     <script src="./js/admin.js"></script>
+
   </body>
 </html>

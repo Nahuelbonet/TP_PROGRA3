@@ -3,13 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Panel de Administración | Electronics Store</title>
+
+  <!-- Fuente -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
     rel="stylesheet"
   >
+
   <style>
+    /* Variables de colores del diseño */
     :root {
       --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       --card-bg: rgba(255, 255, 255, 0.05);
@@ -21,6 +25,7 @@
       --text-main: #f1f1f1;
     }
 
+    /* Reset y fuente */
     * {
       margin: 0;
       padding: 0;
@@ -28,18 +33,20 @@
       font-family: "Poppins", sans-serif;
     }
 
+    /* Fondo general */
     body {
       background: var(--bg-gradient);
       color: var(--text-main);
       min-height: 100vh;
-      display: flex;
+      display: flex; /* Sidebar + contenido al lado */
     }
 
-    /* SIDEBAR */
+    /* ======================= SIDEBAR ======================= */
+
     .sidebar {
-      width: 260px;
-      background: rgba(10, 10, 25, 0.98);
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      width: 260px; /* Ancho del menú */
+      background: rgba(10, 10, 25, 0.98); /* Fondo oscuro */
+      border-right: 1px solid rgba(255, 255, 255, 0.08); /* Bordecito */
       box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
       padding: 1.5rem 1rem;
       display: flex;
@@ -47,7 +54,7 @@
       gap: 1.5rem;
       position: sticky;
       top: 0;
-      height: 100vh;
+      height: 100vh; /* Ocupa toda la altura */
     }
 
     .sidebar-logo {
@@ -63,6 +70,7 @@
       opacity: 0.75;
     }
 
+    /* Navegación del sidebar */
     .sidebar-nav {
       display: flex;
       flex-direction: column;
@@ -70,6 +78,7 @@
       margin-top: 1rem;
     }
 
+    /* Links del menú */
     .sidebar-link {
       display: block;
       padding: 0.7rem 0.9rem;
@@ -77,11 +86,10 @@
       text-decoration: none;
       color: #e0dcff;
       font-size: 0.93rem;
-      background: transparent;
-      border: 1px solid transparent;
-      transition: all 0.25s ease;
+      transition: 0.25s;
     }
 
+    /* Hover del menú */
     .sidebar-link:hover {
       background: rgba(179, 136, 255, 0.08);
       border-color: rgba(179, 136, 255, 0.5);
@@ -89,19 +97,22 @@
       transform: translateX(3px);
     }
 
+    /* Elemento activo */
     .sidebar-link.active {
       background: linear-gradient(135deg, var(--accent-strong), var(--accent-strong-2));
       box-shadow: 0 0 15px rgba(179, 136, 255, 0.7);
       color: #fff;
     }
 
+    /* Parte inferior del sidebar */
     .sidebar-footer {
-      margin-top: auto;
+      margin-top: auto; /* Empuja hacia abajo */
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
     }
 
+    /* Botón cerrar sesión */
     .btn-logout {
       background: linear-gradient(90deg, var(--danger), var(--danger-2));
       border-radius: 10px;
@@ -109,11 +120,9 @@
       border: none;
       color: #fff;
       text-align: center;
-      text-decoration: none;
-      font-weight: 500;
       cursor: pointer;
       box-shadow: 0 0 15px rgba(255, 0, 77, 0.5);
-      transition: all 0.25s ease;
+      transition: 0.25s;
     }
 
     .btn-logout:hover {
@@ -121,28 +130,28 @@
       box-shadow: 0 0 25px rgba(255, 0, 77, 0.9);
     }
 
+    /* Botón volver a la tienda */
     .btn-store {
-      display: block;
       padding: 0.6rem 0.9rem;
       border-radius: 10px;
-      text-align: center;
-      text-decoration: none;
       color: #fff;
+      text-decoration: none;
       border: 1px solid rgba(179, 136, 255, 0.6);
       background: rgba(179, 136, 255, 0.12);
       box-shadow: 0 0 10px rgba(179, 136, 255, 0.4);
+      transition: 0.25s;
       font-size: 0.9rem;
-      transition: all 0.25s ease;
+      text-align: center;
     }
 
     .btn-store:hover {
       background: rgba(179, 136, 255, 0.25);
-      transform: translateY(-1px);
     }
 
-    /* MAIN AREA */
+    /* ======================= CONTENIDO PRINCIPAL ======================= */
+
     .main {
-      flex: 1;
+      flex: 1; /* Ocupa todo el espacio disponible */
       padding: 2rem 3rem;
     }
 
@@ -159,36 +168,35 @@
     }
 
     .main-header-subtitle {
-      font-size: 0.95rem;
       opacity: 0.85;
+      font-size: 0.95rem;
     }
 
     .chip {
       padding: 0.4rem 0.8rem;
       border-radius: 999px;
-      font-size: 0.8rem;
       background: rgba(0, 0, 0, 0.25);
       border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
-    /* CARDS */
+    /* Tarjetas del dashboard */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1.5rem;
-      margin-bottom: 2.5rem;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--card-bg);
       border-radius: 15px;
       padding: 1.5rem;
-      box-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
       position: relative;
       overflow: hidden;
     }
 
+    /* Luz suave dentro de la tarjeta */
     .card::before {
       content: "";
       position: absolute;
@@ -196,15 +204,12 @@
       height: 140%;
       top: -50%;
       right: -60%;
-      background: radial-gradient(circle at top, rgba(179, 136, 255, 0.25), transparent 55%);
-      opacity: 0.7;
-      pointer-events: none;
+      background: radial-gradient(circle, rgba(179, 136, 255, 0.25), transparent 55%);
     }
 
     .card-title {
       font-size: 1rem;
       margin-bottom: 0.4rem;
-      opacity: 0.85;
     }
 
     .card-value {
@@ -224,78 +229,39 @@
       margin-top: 1.2rem;
       display: flex;
       gap: 0.7rem;
-      flex-wrap: wrap;
     }
 
-    .btn-primary,
-    .btn-secondary {
+    /* Botones */
+    .btn-primary {
       padding: 0.6rem 1.1rem;
       border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.25s ease;
-    }
-
-    .btn-primary {
       background: linear-gradient(135deg, var(--accent-strong), var(--accent-strong-2));
       color: #fff;
       box-shadow: 0 0 15px rgba(179, 136, 255, 0.7);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 20px rgba(179, 136, 255, 0.9);
+      text-decoration: none;
     }
 
     .btn-secondary {
-      background: transparent;
+      padding: 0.6rem 1.1rem;
+      border-radius: 999px;
       border: 1px solid rgba(179, 136, 255, 0.6);
+      background: transparent;
       color: #fff;
+      text-decoration: none;
     }
 
-    .btn-secondary:hover {
-      background: rgba(179, 136, 255, 0.2);
-      transform: translateY(-1px);
-    }
-
-    @media (max-width: 900px) {
-      body {
-        flex-direction: column;
-      }
-      .sidebar {
-        flex-direction: row;
-        align-items: center;
-        height: auto;
-        width: 100%;
-        padding: 1rem;
-        position: static;
-      }
-      .sidebar-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-      .sidebar-footer {
-        flex-direction: row;
-        margin-top: 0;
-        margin-left: auto;
-      }
-      .main {
-        padding: 1.5rem 1.2rem;
-      }
-    }
   </style>
 </head>
+
 <body>
 
+  <!-- ======================= SIDEBAR ======================= -->
   <aside class="sidebar">
     <div>
       <div class="sidebar-logo">Electronics Store</div>
       <div class="sidebar-subtitle">Panel de administración</div>
 
+      <!-- Menú lateral -->
       <nav class="sidebar-nav">
         <a href="/admin/dashboard" class="sidebar-link active">📊 Dashboard</a>
         <a href="/admin/productos" class="sidebar-link">📦 Productos</a>
@@ -303,17 +269,16 @@
       </nav>
     </div>
 
+    <!-- Botones inferiores -->
     <div class="sidebar-footer">
-      <a
-        class="btn-store"
-        href="http://127.0.0.1:5500/Electronics_Store/Frontend/index.html"
-      >
+      <a class="btn-store" href="http://127.0.0.1:5500/Electronics_Store/Frontend/index.html">
         🛒 Volver a la tienda
       </a>
       <a class="btn-logout" href="/admin/logout">Cerrar sesión</a>
     </div>
   </aside>
 
+  <!-- ======================= CONTENIDO ======================= -->
   <main class="main">
     <header class="main-header">
       <div>
@@ -322,50 +287,53 @@
           Bienvenido, administrador. Desde aquí podés gestionar productos y revisar ventas.
         </p>
       </div>
+
+      <!-- Chip que marca "Admin" -->
       <div class="chip">Admin</div>
     </header>
 
+    <!-- Tarjetas -->
     <section class="grid">
+
+      <!-- Card Productos -->
       <article class="card">
         <h2 class="card-title">Gestión de productos</h2>
         <p class="card-value">Productos</p>
-        <p class="card-desc">
-          Agregá, editá o eliminá artículos disponibles en la tienda.
-        </p>
+        <p class="card-desc">Agregá, editá o eliminá artículos disponibles en la tienda.</p>
+
         <div class="card-actions">
           <a href="/admin/productos" class="btn-primary">Ir a productos</a>
           <a href="/admin/productos/nuevo" class="btn-secondary">Nuevo producto</a>
         </div>
       </article>
 
+      <!-- Card Ventas -->
       <article class="card">
         <h2 class="card-title">Ventas registradas</h2>
         <p class="card-value">Historial</p>
-        <p class="card-desc">
-          Consultá las ventas realizadas y detallá los productos vendidos.
-        </p>
+        <p class="card-desc">Consultá las ventas realizadas y detallá los productos vendidos.</p>
+
         <div class="card-actions">
           <a href="/admin/ventas" class="btn-primary">Ver ventas</a>
         </div>
       </article>
 
+      <!-- Card Tienda -->
       <article class="card">
         <h2 class="card-title">Portal del cliente</h2>
         <p class="card-value">Frontend</p>
-        <p class="card-desc">
-          Abrir la tienda tal como la ve el cliente, para probar el flujo de compra.
-        </p>
+        <p class="card-desc">Abrir la tienda tal como la ve el cliente para probar compras.</p>
+
         <div class="card-actions">
-          <a
-            href="http://127.0.0.1:5500/Electronics_Store/Frontend/index.html"
-            class="btn-secondary"
-          >
+          <a href="http://127.0.0.1:5500/Electronics_Store/Frontend/index.html"
+             class="btn-secondary">
             Ir a la tienda
           </a>
         </div>
       </article>
-    </section>
 
+    </section>
   </main>
+
 </body>
 </html>

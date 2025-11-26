@@ -3,13 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Ventas | Electronics Store</title>
+
+  <!-- Importo las fuentes que usa todo el panel -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
     rel="stylesheet"
   >
+
   <style>
+    /* Variables de colores del panel */
     :root {
       --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       --accent: #b388ff;
@@ -20,6 +24,7 @@
       --text-main: #f1f1f1;
     }
 
+    /* Reset + fuente global */
     * {
       margin: 0;
       padding: 0;
@@ -27,6 +32,7 @@
       font-family: "Poppins", sans-serif;
     }
 
+    /* Fondo principal del panel */
     body {
       background: var(--bg-gradient);
       color: var(--text-main);
@@ -34,6 +40,9 @@
       display: flex;
     }
 
+    /* ======================
+       SIDEBAR IZQUIERDA
+       ====================== */
     .sidebar {
       width: 260px;
       background: rgba(10, 10, 25, 0.98);
@@ -48,19 +57,21 @@
       height: 100vh;
     }
 
+    /* Logo del panel */
     .sidebar-logo {
       font-size: 1.5rem;
       font-weight: 600;
       color: var(--accent);
       text-shadow: 0 0 15px var(--accent);
-      margin-bottom: 0.5rem;
     }
 
+    /* Texto pequeño debajo del logo */
     .sidebar-subtitle {
       font-size: 0.85rem;
       opacity: 0.75;
     }
 
+    /* Menú de navegación */
     .sidebar-nav {
       display: flex;
       flex-direction: column;
@@ -68,6 +79,7 @@
       margin-top: 1rem;
     }
 
+    /* Links del menú */
     .sidebar-link {
       display: block;
       padding: 0.7rem 0.9rem;
@@ -75,11 +87,11 @@
       text-decoration: none;
       color: #e0dcff;
       font-size: 0.93rem;
-      background: transparent;
       border: 1px solid transparent;
-      transition: all 0.25s ease;
+      transition: 0.25s;
     }
 
+    /* Hover de los links */
     .sidebar-link:hover {
       background: rgba(179, 136, 255, 0.08);
       border-color: rgba(179, 136, 255, 0.5);
@@ -87,12 +99,14 @@
       transform: translateX(3px);
     }
 
+    /* Link activo */
     .sidebar-link.active {
       background: linear-gradient(135deg, var(--accent-strong), var(--accent-strong-2));
       box-shadow: 0 0 15px rgba(179, 136, 255, 0.7);
       color: #fff;
     }
 
+    /* Footer del sidebar */
     .sidebar-footer {
       margin-top: auto;
       display: flex;
@@ -100,6 +114,7 @@
       gap: 0.6rem;
     }
 
+    /* Botón cerrar sesión */
     .btn-logout {
       background: linear-gradient(90deg, var(--danger), var(--danger-2));
       border-radius: 10px;
@@ -107,11 +122,9 @@
       border: none;
       color: #fff;
       text-align: center;
-      text-decoration: none;
-      font-weight: 500;
       cursor: pointer;
       box-shadow: 0 0 15px rgba(255, 0, 77, 0.5);
-      transition: all 0.25s ease;
+      transition: 0.25s;
     }
 
     .btn-logout:hover {
@@ -119,18 +132,18 @@
       box-shadow: 0 0 25px rgba(255, 0, 77, 0.9);
     }
 
+    /* Botón volver a la tienda */
     .btn-store {
-      display: block;
       padding: 0.6rem 0.9rem;
       border-radius: 10px;
+      border: 1px solid rgba(179, 136, 255, 0.6);
+      background: rgba(179, 136, 255, 0.12);
+      font-size: 0.9rem;
       text-align: center;
       text-decoration: none;
       color: #fff;
-      border: 1px solid rgba(179, 136, 255, 0.6);
-      background: rgba(179, 136, 255, 0.12);
       box-shadow: 0 0 10px rgba(179, 136, 255, 0.4);
-      font-size: 0.9rem;
-      transition: all 0.25s ease;
+      transition: 0.25s;
     }
 
     .btn-store:hover {
@@ -138,11 +151,15 @@
       transform: translateY(-1px);
     }
 
+    /* ======================
+       SECCIÓN PRINCIPAL
+       ====================== */
     .main {
       flex: 1;
       padding: 2rem 3rem;
     }
 
+    /* Encabezado del listado */
     .main-header {
       display: flex;
       justify-content: space-between;
@@ -158,21 +175,21 @@
     .chip {
       padding: 0.35rem 0.8rem;
       border-radius: 999px;
-      font-size: 0.8rem;
       border: 1px solid rgba(255, 255, 255, 0.15);
       background: rgba(0, 0, 0, 0.25);
+      font-size: 0.8rem;
     }
 
+    /* Contenedor de la tabla */
     .table-wrapper {
-      margin-top: 0.5rem;
       background: rgba(0, 0, 0, 0.25);
       border-radius: 15px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-      overflow: hidden;
       overflow-x: auto;
     }
 
+    /* Tabla */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -199,6 +216,7 @@
       background: rgba(179, 136, 255, 0.08);
     }
 
+    /* Botón "Ver detalle" */
     .btn-secondary {
       padding: 0.45rem 0.95rem;
       border-radius: 999px;
@@ -208,7 +226,7 @@
       font-size: 0.85rem;
       text-decoration: none;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: 0.25s;
     }
 
     .btn-secondary:hover {
@@ -216,50 +234,28 @@
       transform: translateY(-1px);
     }
 
-    @media (max-width: 900px) {
-      body {
-        flex-direction: column;
-      }
-      .sidebar {
-        flex-direction: row;
-        align-items: center;
-        height: auto;
-        width: 100%;
-        padding: 1rem;
-        position: static;
-      }
-      .sidebar-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-      .sidebar-footer {
-        flex-direction: row;
-        margin-top: 0;
-        margin-left: auto;
-      }
-      .main {
-        padding: 1.5rem 1.2rem;
-      }
-      .table-wrapper {
-        border-radius: 10px;
-      }
-    }
   </style>
 </head>
 <body>
 
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div>
+      <!-- Logo -->
       <div class="sidebar-logo">Electronics Store</div>
       <div class="sidebar-subtitle">Panel de administración</div>
 
+      <!-- Navegación -->
       <nav class="sidebar-nav">
         <a href="/admin/dashboard" class="sidebar-link">📊 Dashboard</a>
         <a href="/admin/productos" class="sidebar-link">📦 Productos</a>
+
+        <!-- Sección actual -->
         <a href="/admin/ventas" class="sidebar-link active">🧾 Ventas</a>
       </nav>
     </div>
 
+    <!-- Footer del menú -->
     <div class="sidebar-footer">
       <a
         class="btn-store"
@@ -267,11 +263,15 @@
       >
         🛒 Volver a la tienda
       </a>
+
       <a class="btn-logout" href="/admin/logout">Cerrar sesión</a>
     </div>
   </aside>
 
+  <!-- CUERPO PRINCIPAL -->
   <main class="main">
+
+    <!-- Encabezado de la sección -->
     <header class="main-header">
       <div>
         <h1 class="main-header-title">Ventas realizadas</h1>
@@ -280,6 +280,7 @@
       <div class="chip">Historial</div>
     </header>
 
+    <!-- TABLA DE VENTAS -->
     <section class="table-wrapper">
       <table>
         <thead>
@@ -291,10 +292,14 @@
             <th>Acción</th>
           </tr>
         </thead>
+
         <tbody>
           <% ventas.forEach(v => { %>
           <tr>
+            <!-- ID -->
             <td><%= v.id %></td>
+
+            <!-- Fecha formateada (si viene como Date) -->
             <td>
               <% if (v.fecha && v.fecha.toLocaleString) { %>
                 <%= v.fecha.toLocaleString() %>
@@ -302,8 +307,14 @@
                 <%= v.fecha %>
               <% } %>
             </td>
+
+            <!-- Total -->
             <td>$<%= v.total %></td>
+
+            <!-- Cantidad total de items de esa venta -->
             <td><%= v.cantidad_items %></td>
+
+            <!-- Botón para entrar al detalle -->
             <td>
               <a href="/admin/ventas/<%= v.id %>" class="btn-secondary">
                 Ver detalle

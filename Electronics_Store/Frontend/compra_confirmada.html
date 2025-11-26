@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Configuración básica del documento -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Compra Confirmada | Electronics Store</title>
 
+    <!-- Ícono de la pestaña -->
     <link rel="icon" type="image/png" href="./assets/img/icono_pc.ico" />
 
-    <!-- SOLO estilos que necesita esta página -->
+    <!-- Estilos específicos de esta página -->
     <link rel="stylesheet" href="./assets/css/compra_confirmada.css">
     <link rel="stylesheet" href="./assets/css/darkmode.css">
 
     <style>
-        /* ACOMODA EL BOTÓN DE MODO OSCURO SOLO PARA ESTA PÁGINA */
+        /* Botón de modo oscuro, solo para esta página */
         .dark-btn-confirmada {
             position: fixed;
             top: 20px;
@@ -28,22 +31,28 @@
 
 <body class="confirmada">
 
-    <!-- Botón de modo oscuro SOLO para esta pantalla -->
+    <!-- Botón de activar/desactivar modo oscuro -->
     <button id="dark-toggle" class="dark-btn-confirmada">🌙</button>
 
+    <!-- Contenedor general de la confirmación -->
     <div class="confirmacion-container animar">
 
+        <!-- Icono de compra exitosa -->
         <div class="icono-exito">✔</div>
 
+        <!-- Título principal -->
         <h1 class="empresa">¡Gracias por tu compra!</h1>
 
+        <!-- Mensaje personalizado -->
         <div class="mensaje">
             <p class="subtitulo">
+                <!-- Nombre del cliente cargado dinámicamente -->
                 Tu pedido fue procesado con éxito, <span id="nombre-usuario"></span>.
             </p>
             <p>Estos son los detalles de tu compra:</p>
         </div>
 
+        <!-- Tabla con el detalle de productos -->
         <div class="detalles-compra">
             <table>
                 <thead>
@@ -54,9 +63,12 @@
                         <th>Subtotal</th>
                     </tr>
                 </thead>
+
+                <!-- Acá se insertan las filas desde JS -->
                 <tbody id="lista-productos"></tbody>
             </table>
 
+            <!-- Info final: total, fecha y número de orden -->
             <div class="total">
                 <p><strong>Total:</strong> <span id="total-final"></span></p>
                 <p><strong>Fecha:</strong> <span id="fecha-hoy"></span></p>
@@ -64,36 +76,43 @@
             </div>
         </div>
 
+        <!-- Botones finales -->
         <div class="botones-final">
+            <!-- Volver al inicio -->
             <button id="volver" class="volver">Volver al inicio</button>
+
+            <!-- Descargar ticket PDF -->
             <button id="descargar-pdf" class="descargar-pdf">Descargar Ticket</button>
         </div>
 
     </div>
 
+    <!-- Lógica de esta página (cargar compra, generar PDF, etc.) -->
     <script src="./js/compra_confirmada.js"></script>
 
     <script>
-        // ================================
-        // MODO OSCURO SOLO PARA ESTA PÁGINA
-        // ================================
+        // ==========================================
+        // MODO OSCURO (solo para esta pantalla)
+        // ==========================================
 
         const toggle = document.getElementById("dark-toggle");
 
-        // Aplicar modo oscuro guardado
+        // Si el usuario ya tenía modo oscuro activado, se aplica
         if (localStorage.getItem("darkMode") === "true") {
             document.body.classList.add("dark-mode");
         }
 
-        // Activar cambio
+        // Al apretar el botón alterna entre modo claro/oscuro
         toggle.addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
 
+            // Guardar el estado para mantenerlo al recargar
             localStorage.setItem(
                 "darkMode",
                 document.body.classList.contains("dark-mode")
             );
         });
     </script>
+
 </body>
 </html>
