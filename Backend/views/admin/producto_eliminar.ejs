@@ -1,37 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8" />
   <title>Eliminar Producto</title>
-  <link rel="stylesheet" href="/admin_dark.css">
 
   <style>
-    body { font-family: Arial; padding: 20px; }
-    .danger { background:#c62828; color:white; padding:12px; border-radius:5px; margin-top:20px; }
-    button { padding:10px; background:#b71c1c; color:white; border:none; border-radius:5px; cursor:pointer; width:200px; margin-top:10px; }
+    /* Cargo la fuente usada en todo el proyecto */
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+    /* Reset general */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    /* Fondo principal y posicionamiento de la tarjeta */
+    body {
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      padding: 4rem 1rem;
+      color: #f1f1f1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* Tarjeta principal */
+    .card {
+      background: rgba(255, 255, 255, 0.05); /* Fondo semi-transparente */
+      border-radius: 15px;
+      padding: 2.2rem;
+      width: 100%;
+      max-width: 550px;
+      backdrop-filter: blur(12px); /* Efecto glass */
+      box-shadow: 0 0 20px rgba(179, 136, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      animation: fadeIn 0.4s ease-out; /* Animación de entrada */
+    }
+
+    /* Animación */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Título */
+    h1 {
+      text-align: center;
+      font-size: 1.9rem;
+      margin-bottom: 1rem;
+      color: #b388ff;
+      text-shadow: 0 0 12px rgba(179, 136, 255, 0.6);
+    }
+
+    /* Texto descriptivo */
+    p {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    /* Caja que muestra la info del producto */
+    .danger-box {
+      background: rgba(255, 0, 77, 0.12);
+      border: 1px solid rgba(255, 0, 77, 0.4);
+      padding: 1.3rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      color: #ff9bb3;
+      box-shadow: 0 0 12px rgba(255, 0, 77, 0.25);
+    }
+
+    /* Nombre del producto resaltado */
+    .danger-box strong {
+      font-size: 1.25rem;
+      color: #ff5c88;
+      text-shadow: 0 0 8px rgba(255, 0, 77, 0.5);
+    }
+
+    /* Botón rojo de eliminar */
+    .btn-danger {
+      width: 100%;
+      padding: 0.9rem;
+      background: linear-gradient(135deg, #ff3b3b, #ff0077);
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 0 15px rgba(255, 0, 77, 0.4);
+    }
+
+    /* Hover del botón */
+    .btn-danger:hover {
+      transform: scale(1.04) translateY(-2px);
+      box-shadow: 0 0 25px rgba(255, 0, 77, 0.7);
+    }
+
+    /* Botón cancelar */
+    .cancel {
+      display: block;
+      margin-top: 1.2rem;
+      text-align: center;
+      color: #b388ff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s ease;
+    }
+
+    .cancel:hover {
+      color: #d9c7ff;
+      text-shadow: 0 0 10px #b388ff;
+    }
   </style>
 </head>
 
 <body>
 
-<button id="dark-toggle" class="dark-btn">🌙</button>
+  <!-- Tarjeta principal -->
+  <div class="card">
 
-<h1>Eliminar Producto</h1>
+    <!-- Título de la página -->
+    <h1>Eliminar Producto</h1>
 
-<p>¿Estás seguro que querés eliminar este producto?</p>
+    <!-- Texto explicativo -->
+    <p>¿Estás seguro que querés eliminar este producto?</p>
 
-<div class="danger">
-  <strong><%= producto.nombre %></strong><br>
-  Precio: $<%= producto.precio %><br>
-  Categoría: <%= producto.categoria %>
-</div>
+    <!-- Información del producto que se está por borrar -->
+    <div class="danger-box">
+      <!-- Nombre del producto -->
+      <strong><%= producto.nombre %></strong><br />
 
-<form method="POST" action="/admin/productos/eliminar/<%= producto.id %>">
-  <button type="submit">Eliminar definitivamente</button>
-</form>
+      <!-- Precio -->
+      Precio: $<%= producto.precio %><br />
 
-<a href="/admin/productos">Cancelar</a>
+      <!-- Categoría -->
+      Categoría: <%= producto.categoria %>
+    </div>
 
-<script src="/admin_darkmode.js"></script>
+    <!-- Form que envía el POST para eliminar definitivamente -->
+    <form method="POST" action="/admin/productos/eliminar/<%= producto.id %>">
+      <button type="submit" class="btn-danger">Eliminar definitivamente</button>
+    </form>
+
+    <!-- Botón cancelar → vuelve a la lista de productos -->
+    <a href="/admin/productos" class="cancel">Cancelar</a>
+  </div>
+
 </body>
 </html>

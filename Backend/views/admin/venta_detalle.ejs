@@ -1,50 +1,226 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8" />
   <title>Detalle de Venta</title>
-  <link rel="stylesheet" href="/admin_dark.css">
+
   <style>
-    body { font-family: Arial; padding: 20px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { border: 1px solid #ccc; padding: 8px; }
-    img { width: 60px; }
-    a.btn { padding: 6px 12px; background:#333; color:white; text-decoration:none; border-radius:5px; }
+    /* Fuente usada en todo el panel */
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+    /* Reset general */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    /* Fondo principal + centrado */
+    body {
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #f1f1f1;
+      min-height: 100vh;
+      padding: 3rem 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Caja principal del detalle */
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2.5rem;
+      border-radius: 15px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 0 25px rgba(179, 136, 255, 0.2);
+      animation: fadeIn 0.35s ease;
+    }
+
+    /* Animación de entrada */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Título de la venta */
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #b388ff;
+      text-shadow: 0 0 12px rgba(179, 136, 255, 0.6);
+    }
+
+    /* Datos generales de la venta */
+    .info {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      color: #d6c3ff;
+      line-height: 1.8rem;
+    }
+
+    .info span {
+      color: #fff;
+      font-weight: 600;
+      text-shadow: 0 0 10px rgba(179, 136, 255, 0.6);
+    }
+
+    /* Botón volver */
+    .btn-back {
+      display: inline-block;
+      margin-bottom: 2rem;
+      padding: 0.7rem 1.5rem;
+      background: linear-gradient(135deg, #7b2ff7, #f107a3);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 500;
+      box-shadow: 0 0 15px rgba(179, 136, 255, 0.45);
+      transition: 0.25s;
+    }
+
+    .btn-back:hover {
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 0 25px rgba(179, 136, 255, 0.8);
+    }
+
+    /* Estilos de la tabla */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(179, 136, 255, 0.15);
+    }
+
+    thead {
+      background: rgba(179, 136, 255, 0.15);
+    }
+
+    th {
+      padding: 1rem;
+      color: #d9c7ff;
+      font-size: 1rem;
+      text-shadow: 0 0 10px rgba(179, 136, 255, 0.4);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    td {
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    tr:hover {
+      background: rgba(179, 136, 255, 0.08);
+      transition: 0.2s;
+    }
+
+    /* Imagen de cada producto */
+    .prod-img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain; /* mantiene proporciones */
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      padding: 6px;
+      box-shadow: 0 0 12px rgba(179, 136, 255, 0.45);
+    }
+
+    /* Botón modo oscuro */
+    #dark-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+    }
   </style>
 </head>
+
 <body>
 
-<button id="dark-toggle" class="dark-btn">🌙</button>
+  <!-- Botón de modo oscuro -->
+  <button id="dark-toggle" class="dark-btn">🌙</button>
 
-<h1>Venta #<%= venta.id %></h1>
-<p><strong>Fecha:</strong> <%= venta.fecha %></p>
-<p><strong>Total:</strong> $<%= venta.total %></p>
+  <div class="container">
 
-<a class="btn" href="/admin/ventas">Volver</a>
+    <!-- Título con ID de venta -->
+    <h1>Venta #<%= venta.id %></h1>
 
-<h2>Productos vendidos</h2>
+    <!-- Datos de la venta formateados a español -->
+    <div class="info">
+      <%
+        // Convierto la fecha de SQL a un objeto Date
+        const f = new Date(venta.fecha);
 
-<table>
-  <thead>
-    <tr>
-      <th>Imagen</th>
-      <th>Producto</th>
-      <th>Cantidad</th>
-      <th>Precio Unitario</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% productos.forEach(p => { %>
-    <tr>
-      <td><img src="<%= p.img %>" alt=""></td>
-      <td><%= p.nombre %></td>
-      <td><%= p.cantidad %></td>
-      <td>$<%= p.precio_unitario %></td>
-    </tr>
-    <% }) %>
-  </tbody>
-</table>
+        // Formateo la fecha a formato español completo
+        const fechaEsp = f.toLocaleString("es-AR", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+      %>
 
-<script src="/admin_darkmode.js"></script>
+      <!-- Muestro fecha y total -->
+      <p><span>Fecha:</span> <%= fechaEsp %> hs</p>
+      <p><span>Total:</span> $<%= venta.total %></p>
+    </div>
+
+    <!-- Botón volver -->
+    <a href="/admin/ventas" class="btn-back">⟵ Volver</a>
+
+    <!-- Subtítulo -->
+    <h2 style="color:#b388ff; margin-top:2rem; margin-bottom:1rem; text-shadow:0 0 8px rgba(179,136,255,0.5);">
+      Productos vendidos
+    </h2>
+
+    <!-- Tabla con detalle de productos -->
+    <table>
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio Unitario</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% productos.forEach(p => { %>
+        <tr>
+          <!-- Imagen del producto -->
+          <td>
+            <img class="prod-img" src="/assets/img/<%= p.img %>" alt="<%= p.nombre %>">
+          </td>
+
+          <!-- Nombre -->
+          <td><%= p.nombre %></td>
+
+          <!-- Cantidad vendida -->
+          <td><%= p.cantidad %></td>
+
+          <!-- Precio unitario -->
+          <td>$<%= p.precio_unitario %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- Script de modo oscuro -->
+  <script src="/admin_darkmode.js"></script>
 </body>
 </html>

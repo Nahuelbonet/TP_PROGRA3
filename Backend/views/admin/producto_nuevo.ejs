@@ -3,34 +3,101 @@
 <head>
     <meta charset="utf-8">
     <title>Nuevo Producto</title>
+
+    <!-- CSS del modo oscuro del panel admin -->
     <link rel="stylesheet" href="/admin_dark.css">
 
     <style>
-        body { font-family: Arial; padding: 20px; }
-        form { max-width: 400px; }
-        input { width: 100%; padding: 10px; margin-top: 10px; }
-        button { margin-top: 10px; padding: 10px; width: 100%; background:#333; color:white; border:none; border-radius:5px; cursor:pointer; }
-        a { display: inline-block; margin-top: 15px; }
+        /* Estilos simples para el formulario */
+        body { 
+            font-family: Arial; 
+            padding: 20px; 
+        }
+
+        form { 
+            max-width: 400px; 
+        }
+
+        /* Inputs del formulario */
+        input { 
+            width: 100%; 
+            padding: 10px; 
+            margin-top: 10px; 
+        }
+
+        /* Botón guardar */
+        button { 
+            margin-top: 10px; 
+            padding: 10px; 
+            width: 100%; 
+            background:#333; 
+            color:white; 
+            border:none; 
+            border-radius:5px; 
+            cursor:pointer; 
+        }
+
+        /* Botón volver */
+        a { 
+            display: inline-block; 
+            margin-top: 15px; 
+        }
     </style>
 </head>
 
 <body>
 
+<!-- Botón para activar/desactivar modo oscuro -->
 <button id="dark-toggle" class="dark-btn">🌙</button>
 
+<!-- Título de la página -->
 <h1>Crear Nuevo Producto</h1>
 
+<!-- Formulario para crear un producto nuevo -->
 <form action="/admin/productos/nuevo" method="POST">
-    <input type="text" name="nombre" placeholder="Nombre" required>
-    <input type="number" name="precio" step="0.01" placeholder="Precio" required>
-    <input type="text" name="categoria" placeholder="Categoría" required>
-    <input type="text" name="img" placeholder="Ruta de imagen" required>
 
+    <!-- Nombre del producto -->
+    <input 
+        type="text" 
+        name="nombre" 
+        placeholder="Nombre" 
+        required
+    >
+
+    <!-- Precio -->
+    <input 
+        type="number" 
+        name="precio" 
+        step="0.01" 
+        placeholder="Precio" 
+        required
+    >
+
+    <!-- Categoría -->
+    <input 
+        type="text" 
+        name="categoria" 
+        placeholder="Categoría" 
+        required
+    >
+
+    <!-- Archivo de imagen (solo el nombre, ej: ps5.jpg) -->
+    <input 
+        type="text" 
+        name="img" 
+        placeholder="Ruta de imagen" 
+        required
+    >
+
+    <!-- Botón para enviar el formulario -->
     <button type="submit">Guardar</button>
 </form>
 
+<!-- Link para volver a la lista de productos -->
 <a href="/admin/productos">Volver</a>
 
+<!-- Script del modo oscuro -->
 <script src="/admin_darkmode.js"></script>
+
 </body>
 </html>

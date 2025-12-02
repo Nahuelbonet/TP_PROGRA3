@@ -1,16 +1,21 @@
-// ==========================
+// =====================================
 // OBTENER ID DE VENTA REAL
-// ==========================
+// =====================================
+
+// Leo los parámetros que vienen en la URL (?idVenta=12)
 const params = new URLSearchParams(window.location.search);
+
+// Saco el idVenta
 const idVenta = params.get("idVenta");
 
-// Evita #null
+// Muestro #número o "—" si no vino
 document.getElementById("nro-orden").innerText = idVenta ? `#${idVenta}` : "—";
 
 
-// ==========================
-// OBTENER DATOS NECESARIOS
-// ==========================
+// =====================================
+// OBTENER DATOS Y RENDERIZAR LA COMPRA
+// =====================================
+
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = localStorage.getItem("userName") || "Cliente";
   const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -31,95 +36,63 @@ document.addEventListener("DOMContentLoaded", () => {
       <td>$${item.precio.toLocaleString()}</td>
       <td>$${subtotal.toLocaleString()}</td>
     `;
+
     tbody.appendChild(fila);
   });
 
-  // Total
   document.getElementById("total-final").textContent =
     "$" + total.toLocaleString();
 
-  // Fecha
   const fecha = new Date();
   const fechaFormateada = fecha.toLocaleDateString("es-AR", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   });
+
   document.getElementById("fecha-hoy").textContent = fechaFormateada;
 
-  // 🔥 BORRAR EL CARRITO CUANDO EL USUARIO SE VA
+  // Limpio carrito al salir de la página
   window.addEventListener("beforeunload", () => {
     localStorage.removeItem("carrito");
   });
 
-  // Volver
+  // Botón para volver a la tienda
   document.getElementById("volver").addEventListener("click", () => {
     window.location.href = "index.html";
   });
 });
 
 
-// ==========================
-// GENERAR TICKET PDF
-// ==========================
+// =====================================
+// DESCARGAR TICKET PDF DESDE EL BACKEND
+// =====================================
+
 document.getElementById("descargar-pdf").addEventListener("click", () => {
-  const script = document.createElement("script");
-  script.src =
-    "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
-  script.onload = generarTicketPDF;
-  document.body.appendChild(script);
+  if (!idVenta) {
+    alert("No se encontró la venta. No se puede generar el ticket.");
+    return;
+  }
+
+  // Llamo al backend para generar y descargar el PDF real
+  fetch(`http://localhost:3000/ticket/${idVenta}`)
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Error al generar el ticket");
+      }
+      return res.blob();
+    })
+    .then((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `ticket_${idVenta}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("Hubo un error al generar el ticket.");
+    });
 });
-
-function generarTicketPDF() {
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF({ unit: "mm", format: "a4" });
-
-  let y = 20;
-
-  // Título
-  pdf.setFontSize(22);
-  pdf.text("Electronics Store", 20, y);
-  y += 10;
-
-  pdf.setLineWidth(0.5);
-  pdf.line(20, y, 190, y);
-  y += 10;
-
-  // Datos
-  const numeroOrden = document.getElementById("nro-orden").innerText;
-  const fechaHoy = document.getElementById("fecha-hoy").innerText;
-  const usuario = document.getElementById("nombre-usuario").innerText;
-
-  pdf.setFontSize(12);
-  pdf.text(`Ticket de Compra`, 20, y); y += 7;
-  pdf.text(`N° de Orden: ${numeroOrden}`, 20, y); y += 7;
-  pdf.text(`Cliente: ${usuario}`, 20, y); y += 7;
-  pdf.text(`Fecha: ${fechaHoy}`, 20, y); y += 15;
-
-  pdf.setFontSize(14);
-  pdf.text("Detalle del pedido:", 20, y);
-  y += 10;
-
-  // Tabla
-  const filas = document.querySelectorAll("#lista-productos tr");
-
-  filas.forEach((fila) => {
-    const tds = fila.querySelectorAll("td");
-    if (tds.length === 4) {
-      pdf.setFontSize(12);
-      pdf.text(`Producto: ${tds[0].innerText}`, 20, y); y += 6;
-      pdf.text(`Cantidad: ${tds[1].innerText}`, 20, y); y += 6;
-      pdf.text(`Precio Unit.: ${tds[2].innerText}`, 20, y); y += 6;
-      pdf.text(`Subtotal: ${tds[3].innerText}`, 20, y); y += 10;
-    }
-  });
-
-  // Total
-  const totalFinal = document.getElementById("total-final").innerText;
-  pdf.setFontSize(14);
-  pdf.text(`TOTAL: ${totalFinal}`, 20, y);
-
-  y += 20;
-
-  pdf.save("ticket_compra.pdf");
-}

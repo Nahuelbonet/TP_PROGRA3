@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Administrar Productos | Electronics Store</title>
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -11,6 +13,9 @@
   >
 
   <style>
+    /* -------------------------------
+       Variables de colores del panel
+       ------------------------------- */
     :root {
       --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       --card-bg: rgba(255, 255, 255, 0.05);
@@ -22,6 +27,7 @@
       --text-main: #f1f1f1;
     }
 
+    /* Reseteo básico */
     * {
       margin: 0;
       padding: 0;
@@ -29,6 +35,7 @@
       font-family: "Poppins", sans-serif;
     }
 
+    /* Fondo del panel admin */
     body {
       background: var(--bg-gradient);
       color: var(--text-main);
@@ -36,9 +43,7 @@
       display: flex;
     }
 
-    /* =======================
-       ESTILO MINI IMÁGENES
-       ======================= */
+    /* Mini imágenes dentro de la tabla */
     .admin-mini-img {
       width: 70px;
       height: 70px;
@@ -49,9 +54,9 @@
       background: rgba(255, 255, 255, 0.05);
     }
 
-    /* =======================
-       SIDEBAR
-       ======================= */
+    /* ------------------------------
+       SIDEBAR (barra lateral)
+       ------------------------------ */
     .sidebar {
       width: 260px;
       background: rgba(10, 10, 25, 0.98);
@@ -66,6 +71,7 @@
       height: 100vh;
     }
 
+    /* Título del panel en el sidebar */
     .sidebar-logo {
       font-size: 1.5rem;
       font-weight: 600;
@@ -79,6 +85,7 @@
       opacity: 0.75;
     }
 
+    /* Links del menú lateral */
     .sidebar-nav {
       display: flex;
       flex-direction: column;
@@ -98,6 +105,7 @@
       transition: all 0.25s ease;
     }
 
+    /* Hover menú */
     .sidebar-link:hover {
       background: rgba(179, 136, 255, 0.08);
       border-color: rgba(179, 136, 255, 0.5);
@@ -105,12 +113,14 @@
       transform: translateX(3px);
     }
 
+    /* Link activo */
     .sidebar-link.active {
       background: linear-gradient(135deg, var(--accent-strong), var(--accent-strong-2));
       box-shadow: 0 0 15px rgba(179, 136, 255, 0.7);
       color: #fff;
     }
 
+    /* Botones del pie del sidebar */
     .sidebar-footer {
       margin-top: auto;
       display: flex;
@@ -129,26 +139,11 @@
       font-weight: 500;
       cursor: pointer;
       box-shadow: 0 0 15px rgba(255, 0, 77, 0.5);
-      transition: all 0.25s ease;
     }
 
-    .btn-store {
-      display: block;
-      padding: 0.6rem 0.9rem;
-      border-radius: 10px;
-      text-align: center;
-      text-decoration: none;
-      color: #fff;
-      border: 1px solid rgba(179, 136, 255, 0.6);
-      background: rgba(179, 136, 255, 0.12);
-      box-shadow: 0 0 10px rgba(179, 136, 255, 0.4);
-      font-size: 0.9rem;
-      transition: all 0.25s ease;
-    }
-
-    /* =======================
-       MAIN / TABLA
-       ======================= */
+    /* -------------------------
+       ÁREA PRINCIPAL (TABLA)
+       ------------------------- */
     .main {
       flex: 1;
       padding: 2rem 3rem;
@@ -166,6 +161,7 @@
       text-shadow: 0 0 12px var(--accent);
     }
 
+    /* Botón de crear producto */
     .btn-primary {
       background: linear-gradient(135deg, var(--accent-strong), var(--accent-strong-2));
       padding: 0.55rem 1.1rem;
@@ -174,6 +170,7 @@
       color: #fff;
     }
 
+    /* Contenedor de la tabla */
     .table-wrapper {
       margin-top: 1.5rem;
       background: rgba(0, 0, 0, 0.25);
@@ -183,6 +180,7 @@
       box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
     }
 
+    /* Tabla */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -194,6 +192,7 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
+    /* Botonera por cada producto */
     .acciones {
       display: flex;
       gap: 0.4rem;
@@ -219,11 +218,13 @@
 
 <body>
 
+  <!-- Sidebar del panel admin -->
   <aside class="sidebar">
     <div>
       <div class="sidebar-logo">Electronics Store</div>
       <div class="sidebar-subtitle">Panel de administración</div>
 
+      <!-- Opciones del menú -->
       <nav class="sidebar-nav">
         <a href="/admin/dashboard" class="sidebar-link">📊 Dashboard</a>
         <a href="/admin/productos" class="sidebar-link active">📦 Productos</a>
@@ -231,6 +232,7 @@
       </nav>
     </div>
 
+    <!-- Botones del final -->
     <div class="sidebar-footer">
       <a
         class="btn-store"
@@ -242,7 +244,10 @@
     </div>
   </aside>
 
+  <!-- Contenido principal -->
   <main class="main">
+
+    <!-- Encabezado: título + buscador + botón crear -->
     <header class="main-header">
       <div>
         <h1 class="main-header-title">Productos</h1>
@@ -250,11 +255,15 @@
       </div>
 
       <div class="toolbar">
+        <!-- Buscador live -->
         <input id="buscador" type="text" placeholder="Buscar producto..." />
+
+        <!-- Botón a "Nuevo Producto" -->
         <a href="/admin/productos/nuevo" class="btn-primary">➕ Nuevo producto</a>
       </div>
     </header>
 
+    <!-- Tabla completa de productos -->
     <section class="table-wrapper">
       <table>
         <thead>
@@ -268,42 +277,61 @@
         </thead>
 
         <tbody id="tabla-productos">
+          
           <% productos.forEach(p => { %>
+
           <tr>
+            <!-- Nombre -->
             <td><%= p.nombre %></td>
+
+            <!-- Precio -->
             <td>$<%= p.precio %></td>
+
+            <!-- Categoría -->
             <td><%= p.categoria %></td>
 
-<td>
-  <% if (p.img) { %>
-<img src="/assets/img/<%= p.img %>" 
-     alt="<%= p.nombre %>"
-     style="width:60px;height:60px;border-radius:10px;object-fit:cover;">
+            <!-- Imagen -->
+            <td>
+              <% if (p.img) { %>
+                <!-- Muestro mini imagen -->
+                <img src="/assets/img/<%= p.img %>"
+                     alt="<%= p.nombre %>"
+                     style="width:60px;height:60px;border-radius:10px;object-fit:cover;">
+              <% } else { %>
+                <!-- Si no hay imagen -->
+                <span style="opacity:.7;">Sin imagen</span>
+              <% } %>
+            </td>
 
-  <% } else { %>
-    <span style="opacity:.7;">Sin imagen</span>
-  <% } %>
-</td>
-
+            <!-- Acciones -->
             <td>
               <div class="acciones">
-                <a href="/admin/productos/editar/<%= p.id %>" class="btn-secondary">Editar</a>
-                <a href="/admin/productos/eliminar/<%= p.id %>" class="btn-danger">Eliminar</a>
+                <a href="/admin/productos/editar/<%= p.id %>" class="btn-secondary">
+                  Editar
+                </a>
+
+                <a href="/admin/productos/eliminar/<%= p.id %>" class="btn-danger">
+                  Eliminar
+                </a>
               </div>
             </td>
           </tr>
+
           <% }) %>
+
         </tbody>
       </table>
     </section>
   </main>
 
   <script>
+    // Busqueda en vivo dentro de la tabla de productos
     const buscador = document.getElementById("buscador");
     const filas = document.querySelectorAll("#tabla-productos tr");
 
     buscador.addEventListener("input", () => {
       const filtro = buscador.value.toLowerCase();
+
       filas.forEach(fila => {
         const texto = fila.innerText.toLowerCase();
         fila.style.display = texto.includes(filtro) ? "" : "none";

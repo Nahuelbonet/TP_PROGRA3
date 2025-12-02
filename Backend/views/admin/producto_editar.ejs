@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <title>Editar Producto | Admin</title>
 
+  <!-- Cargo fuente Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -12,6 +13,7 @@
   />
 
   <style>
+    /* Variables de colores del diseño */
     :root {
       --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       --card-bg: rgba(255, 255, 255, 0.05);
@@ -21,6 +23,7 @@
       --text-main: #f1f1f1;
     }
 
+    /* Reset + tipografía */
     * {
       margin: 0;
       padding: 0;
@@ -28,6 +31,7 @@
       font-family: "Poppins", sans-serif;
     }
 
+    /* Fondo centrado */
     body {
       min-height: 100vh;
       background: var(--bg-gradient);
@@ -38,6 +42,7 @@
       color: var(--text-main);
     }
 
+    /* Caja principal donde está el form */
     .wrapper {
       width: 100%;
       max-width: 520px;
@@ -53,6 +58,7 @@
       text-align: center;
     }
 
+    /* Título */
     .title {
       font-size: 1.7rem;
       margin-bottom: 1.8rem;
@@ -60,6 +66,7 @@
       text-shadow: 0 0 14px var(--accent);
     }
 
+    /* Formulario en columna */
     form {
       display: flex;
       flex-direction: column;
@@ -67,6 +74,7 @@
       margin-bottom: 1.4rem;
     }
 
+    /* Inputs del formulario */
     input[type="text"],
     input[type="number"] {
       width: 100%;
@@ -79,16 +87,19 @@
       transition: all 0.25s ease;
     }
 
+    /* Color placeholder */
     input::placeholder {
       color: rgba(255, 255, 255, 0.55);
     }
 
+    /* Efecto cuando el input está seleccionado */
     input:focus {
       border-color: rgba(179, 136, 255, 0.9);
       box-shadow: 0 0 12px rgba(179, 136, 255, 0.6);
       background: rgba(15, 12, 41, 0.9);
     }
 
+    /* Botón guardar */
     button[type="submit"] {
       margin-top: 0.5rem;
       width: 100%;
@@ -106,6 +117,7 @@
       transition: all 0.25s ease;
     }
 
+    /* Hover botón */
     button[type="submit"]:hover {
       transform: translateY(-2px);
       box-shadow:
@@ -113,6 +125,7 @@
         0 0 30px rgba(241, 7, 163, 0.8);
     }
 
+    /* Botón volver */
     .back-link {
       display: inline-block;
       margin-top: 0.6rem;
@@ -132,6 +145,7 @@
       box-shadow: 0 0 12px rgba(179, 136, 255, 0.6);
     }
 
+    /* Ajustes responsive */
     @media (max-width: 600px) {
       .wrapper {
         padding: 2.1rem 1.6rem 2rem;
@@ -144,10 +158,15 @@
 </head>
 
 <body>
+
+  <!-- Contenedor del formulario -->
   <section class="wrapper">
     <h1 class="title">Editar Producto</h1>
 
+    <!-- Formulario que actualiza el producto -->
     <form method="POST" action="/admin/productos/editar/<%= producto.id %>">
+
+      <!-- Nombre del producto -->
       <input
         type="text"
         name="nombre"
@@ -155,6 +174,8 @@
         placeholder="Nombre del producto"
         required
       />
+
+      <!-- Precio -->
       <input
         type="number"
         name="precio"
@@ -162,6 +183,8 @@
         placeholder="Precio"
         required
       />
+
+      <!-- Categoría -->
       <input
         type="text"
         name="categoria"
@@ -169,6 +192,8 @@
         placeholder="Categoría"
         required
       />
+
+      <!-- Nombre del archivo de imagen -->
       <input
         type="text"
         name="img"
@@ -177,10 +202,13 @@
         required
       />
 
+      <!-- Botón para guardar -->
       <button type="submit">Guardar Cambios</button>
     </form>
 
+    <!-- Botón volver a productos -->
     <a href="/admin/productos" class="back-link">Volver</a>
   </section>
+
 </body>
 </html>

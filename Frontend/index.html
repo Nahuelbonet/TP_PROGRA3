@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <!-- Configuración básica -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Electronics Store</title>
+
+    <!-- Icono de pestaña -->
     <link rel="icon" type="image/png" href="./assets/img/icono_pc.ico" />
+
+    <!-- Estilos principales del Home -->
     <link rel="stylesheet" href="./assets/css/index.css" />
     <link rel="stylesheet" href="./assets/css/darkmode.css" />
 
-    <!-- Estilo para el botón Admin -->
+    <!-- Estilo del botón Admin (solo visual) -->
     <style>
       .btn-admin {
         margin-right: 12px;
@@ -29,25 +35,29 @@
 
   <body>
     <header>
+      <!-- Logo -->
       <div class="logo">Electronics Store</div>
 
-      <!-- Botón Panel Admin (solo aparece si isAdmin === true) -->
+      <!-- Botón que lleva al panel Admin (solo si es admin) -->
+      <!-- Lo oculto por defecto. JS lo muestra si isAdmin = true -->
       <button id="btn-admin" class="btn-admin hidden">Panel Admin</button>
 
-      <!-- Logout -->
+      <!-- Botón para cerrar sesión -->
       <button id="logout-button">Logout</button>
 
-      <!-- botón hamburguesa -->
+      <!-- Botón hamburguesa para celulares -->
       <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
         ☰
       </button>
 
-      <!-- nav que contiene los elementos del header -->
+      <!-- Menú principal -->
       <nav class="nav" aria-label="Menú principal">
 
-        <!-- === DROPDOWN CATÁLOGO === -->
+        <!-- ====== Dropdown Catálogo ====== -->
         <div class="dropdown">
           <button class="boton-dropdown">Catálogo</button>
+
+          <!-- Opciones que filtran productos por categoría -->
           <div class="contenido-desplegable">
             <a href="#" data-categoria="Todos">Todos</a>
             <a href="#" data-categoria="Celulares">Celulares</a>
@@ -55,7 +65,7 @@
           </div>
         </div>
 
-        <!-- === BOTÓN MODO OSCURO === -->
+        <!-- Botón modo oscuro -->
         <button id="dark-toggle" class="dark-btn">🌙</button>
 
         <!-- Buscador -->
@@ -70,44 +80,58 @@
     </header>
 
     <main>
+      <!-- Título de la sección productos (cambia según categoría) -->
       <h2 id="titulo-productos">Nuestros Productos</h2>
 
+      <!-- Botones para ordenar -->
       <div class="botones-ordenar">
         <button id="ordenar-nombre">Ordenar por nombre</button>
         <button id="ordenar-precio">Ordenar por precio</button>
       </div>
 
+      <!-- Acá se insertan todas las cards de productos -->
       <div class="lista_productos"></div>
     </main>
 
+    <!-- Panel lateral del carrito -->
     <section class="seccion_carrito" id="panel-carrito">
+
+      <!-- Fondo para cerrar el carrito -->
       <div id="cerrar-carrito" class="cerrar-carrito"></div>
 
       <h2>Carrito</h2>
 
+      <!-- Productos dentro del carrito -->
       <div class="carrito-items"></div>
 
+      <!-- Total final -->
       <div class="carrito-total">Total: $0</div>
 
+      <!-- Confirmar compra -->
       <button id="finalizar_compra" class="finalizar_compra">
         Confirmar Compra
       </button>
 
+      <!-- Vaciar carrito -->
       <button id="vaciar" class="vaciar">Vaciar Carrito</button>
     </section>
 
     <footer>© 2025 Electronics Store. Todos los derechos reservados.</footer>
 
+    <!-- Script principal del frontend (maneja productos, carrito, filtros, etc.) -->
     <script src="./js/main.js"></script>
 
-    <!-- Script para mostrar el botón Admin si corresponde -->
+    <!-- Mostrar botón Admin si corresponde -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const btnAdmin = document.getElementById("btn-admin");
-        const isAdmin = localStorage.getItem("isAdmin");
+        const btnAdmin = document.getElementById("btn-admin"); // botón admin
+        const isAdmin = localStorage.getItem("isAdmin");        // flag de admin guardado
 
+        // Si es admin → muestro el botón
         if (isAdmin === "true") {
           btnAdmin.classList.remove("hidden");
+
+          // Si lo toca, lo llevo al dashboard del backend
           btnAdmin.addEventListener("click", () => {
             window.location.href = "http://localhost:3000/admin/dashboard";
           });
